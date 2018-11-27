@@ -12,7 +12,7 @@ import time
 
 class path_plan:
 
-	def __init__(self, x):
+	def __init__(self):
 			
 			
 		self._place_name = 'Universidad Carlos III de Madrid, 30, Avenida de la Universidad'
@@ -29,7 +29,7 @@ class path_plan:
 		self._path= Path()
 		self._route = []
 		
-		rospy.init_node('road_processor_planner', anonymous=True, x)
+		rospy.init_node('road_processor_planner', anonymous=True)
 		
 		self.route_pub = rospy.Publisher("route_points", Path)
 		self._rate = rospy.Rate(1)
