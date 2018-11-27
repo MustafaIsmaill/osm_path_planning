@@ -8,6 +8,7 @@ from nav_msgs.msg import Path
 from geometry_msgs.msg import PoseStamped
 import time
 
+##added comments for testing
 
 class path_plan:
 
