@@ -88,7 +88,3 @@ if __name__ == '__main__':
 		# path.draw_route()
 	except Exception as e:
 		print(e)
-
-
-for i in range(0,5):
-	break
