@@ -1,0 +1,5 @@
+<launch>
+
+  <node pkg="road_processing_planning" type="path_points_publisher.py" name="road_processor_planner"/>
+
+</launch>
