@@ -12,30 +12,31 @@ import time
 
 class path_processing_planning:
 
-	def __init__(self, place_name):
-			
-			
-		self._place_name = place_name
+	def __init__(self):
 		
 		rospy.init_node('road_processor_planner', anonymous=True)
-		
+
 		self.route_pub = rospy.Publisher("route_points", Path)
 		self._rate = rospy.Rate(1)
 		self._route_pointx = []
 		self._route_pointy = []
 
-		self._path= Path()
+		self._path = Path()
 		self._path.header.stamp = rospy.Time.now()
 
-		self._path_getter_srv = rospy.Service('path_getter', getPath, return_path)
+		print("here")
+		self._path_getter_srv = rospy.Service('path_getter', getPath, self.return_path)
+		print("but not here")
+
+		rospy.spin()
 
 
-	def get_map(self):
+	def get_map(self, name):
 
 		try:
-			self._graph = ox.graph_from_place(self._place_name, network_type='drive')
+			self._graph = ox.graph_from_place(name, network_type='drive')
 		except:
-			self._graph = ox.graph_from_address(self._place_name, distance=250, network_type='drive')
+			self._graph = ox.graph_from_address(name, distance=250, network_type='drive')
 	
 		self._graph_proj = ox.project_graph(self._graph)
 		
@@ -76,10 +77,6 @@ class path_processing_planning:
 
 		 	self._path.poses.append(pose_st)
 
-
-	def return_path(self):
-		return self._path
-
 	def publish_path_points(self):
 
 		while not rospy.is_shutdown():
@@ -90,15 +87,23 @@ class path_processing_planning:
 	def draw_route(self):
 		ox.plot_graph_route(self._graph_proj, self._route)
 
+	def return_path(self, place_name):
+		place_name = str(place_name)
+		length = len(place_name)
+		place_name = place_name[13:length-1]
+		print(place_name)
+		print(type(place_name))
+		self.get_map(place_name)
+		self.plan_path()
+		self.generate_path_points()
+		self.draw_route()
+		return self._path
+
 if __name__ == '__main__':
 	try:
 		
-		place_name='Universidad Carlos III de Madrid, 30, Avenida de la Universidad'
-		path = path_processing_planning(place_name)
-		path.get_map()
-		path.plan_path()
-		path.generate_path_points()
-		path.draw_route()
+		# place_name='Universidad Carlos III de Madrid, 30, Avenida de la Universidad'
+		path = path_processing_planning()
 		# path.publish_path_points()
 
 	except Exception as e:
