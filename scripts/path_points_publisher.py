@@ -29,7 +29,7 @@ class path_plan:
 		self._path= Path()
 		self._route = []
 		
-		rospy.init_node('road_processor_planner', anonymous=True)
+		rospy.init_node('road_processor_planner', anonymous=True, x)
 		
 		self.route_pub = rospy.Publisher("route_points", Path)
 		self._rate = rospy.Rate(1)
