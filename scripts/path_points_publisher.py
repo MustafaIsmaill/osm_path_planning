@@ -12,7 +12,7 @@ import time
 
 class path_plan:
 
-	def __init__(self):
+	def __init__(self, x):
 			
 			
 		self._place_name = 'Universidad Carlos III de Madrid, 30, Avenida de la Universidad'
