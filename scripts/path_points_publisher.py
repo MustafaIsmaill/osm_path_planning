@@ -27,7 +27,7 @@ class path_processing_planning:
 		self._path= Path()
 		self._path.header.stamp = rospy.Time.now()
 
-		self._path_getter_srv = rospy.Service('path_getter',get_path,return_path)
+		self._path_getter_srv = rospy.Service('path_getter', getPath, return_path)
 
 
 	def get_map(self):
@@ -78,7 +78,6 @@ class path_processing_planning:
 
 
 	def return_path(self):
-
 		return self._path
 
 	def publish_path_points(self):
