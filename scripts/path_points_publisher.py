@@ -7,6 +7,7 @@ import networkx as nx
 from nav_msgs.msg import Path
 from geometry_msgs.msg import PoseStamped
 
+from road_processing_planning.srv import *
 import time
 
 class path_processing_planning:
@@ -25,6 +26,8 @@ class path_processing_planning:
 
 		self._path= Path()
 		self._path.header.stamp = rospy.Time.now()
+
+		self._path_getter_srv = rospy.Service('path_getter',get_path,return_path)
 
 
 	def get_map(self):
@@ -74,6 +77,10 @@ class path_processing_planning:
 		 	self._path.poses.append(pose_st)
 
 
+	def return_path(self):
+
+		return self._path
+
 	def publish_path_points(self):
 
 		while not rospy.is_shutdown():
@@ -93,7 +100,7 @@ if __name__ == '__main__':
 		path.plan_path()
 		path.generate_path_points()
 		path.draw_route()
-		path.publish_path_points()
+		# path.publish_path_points()
 
 	except Exception as e:
 		print(e)
