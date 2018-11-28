@@ -1,2 +1,3 @@
+string place_name
 ---
 nav_msgs/Path path
