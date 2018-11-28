@@ -7,7 +7,6 @@ import networkx as nx
 from nav_msgs.msg import Path
 from geometry_msgs.msg import PoseStamped
 
-from road_processing_planning.srv import *
 import time
 
 class path_processing_planning:
