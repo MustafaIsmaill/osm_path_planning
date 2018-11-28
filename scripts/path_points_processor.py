@@ -40,17 +40,17 @@ class path_processing_planning:
 	
 	def plan_path(self):
 
-		self._startx = self._nodes[:].x[(self._edges[:].u[34])]
-		self._starty = self._nodes[:].y[(self._edges[:].u[34])]
-		self._endx = self._nodes[:].x[(self._edges[:].v[34])]
-		self._endy = self._nodes[:].y[(self._edges[:].v[34])]
+		self._startx = self._nodes[:].x[(self._edges[:].v[34])]
+		self._starty = self._nodes[:].y[(self._edges[:].v[34])]
+		self._endx = self._nodes[:].x[(self._edges[:].u[34])]
+		self._endy = self._nodes[:].y[(self._edges[:].u[34])]
 
 		self._origin=(self._startx,self._starty)
 		self._destination=(self._endx,self._endy)
 		self._origin_node = ox.get_nearest_node(self._graph_proj, self._origin)
 		self._destination_node = ox.get_nearest_node(self._graph_proj, self._destination)
 
-		self._route = nx.shortest_path(G= self._graph_proj, source= self._origin_node,
+		self._route = nx.dijkstra_path(G= self._graph_proj, source= self._origin_node,
 		 target=self._destination_node , weight='length')
 		
 	def generate_path_points(self):
@@ -81,7 +81,7 @@ class path_processing_planning:
 	# 		self._rate.sleep()
 
 	def draw_route(self):
-		ox.plot_graph_route(self._graph_proj, self._route)
+		ox.plot_graph_route(self._graph_proj, self._route,route_linewidth=6)
 
 	def return_path(self, place_name):
 		place_name = str(place_name)
