@@ -14,21 +14,18 @@ class path_processing_planning:
 
 	def __init__(self):
 		
-		rospy.init_node('road_processor_planner', anonymous=True)
+		# rospy.init_node('road_processor_planner', anonymous=True)
 
-		self.route_pub = rospy.Publisher("route_points", Path)
-		self._rate = rospy.Rate(1)
+		# self.route_pub = rospy.Publisher("route_points", Path)
+		# self._rate = rospy.Rate(1)
+
 		self._route_pointx = []
 		self._route_pointy = []
 
 		self._path = Path()
 		self._path.header.stamp = rospy.Time.now()
 
-		print("here")
-		self._path_getter_srv = rospy.Service('path_getter', getPath, self.return_path)
-		print("but not here")
-
-		rospy.spin()
+		# rospy.spin()
 
 
 	def get_map(self, name):
@@ -77,12 +74,12 @@ class path_processing_planning:
 
 		 	self._path.poses.append(pose_st)
 
-	def publish_path_points(self):
+	# def publish_path_points(self):
 
-		while not rospy.is_shutdown():
-			print("publishing...")
-			self.route_pub.publish(self._path)
-			self._rate.sleep()
+	# 	while not rospy.is_shutdown():
+	# 		print("publishing...")
+	# 		self.route_pub.publish(self._path)
+	# 		self._rate.sleep()
 
 	def draw_route(self):
 		ox.plot_graph_route(self._graph_proj, self._route)
@@ -98,13 +95,3 @@ class path_processing_planning:
 		self.generate_path_points()
 		self.draw_route()
 		return self._path
-
-if __name__ == '__main__':
-	try:
-		
-		# place_name='Universidad Carlos III de Madrid, 30, Avenida de la Universidad'
-		path = path_processing_planning()
-		# path.publish_path_points()
-
-	except Exception as e:
-		print(e)
