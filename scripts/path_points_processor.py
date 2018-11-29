@@ -8,6 +8,7 @@ from nav_msgs.msg import Path
 from geometry_msgs.msg import PoseStamped
 
 import time
+import cPickle as pickle
 
 class path_processing_planning:
 
@@ -27,13 +28,21 @@ class path_processing_planning:
 		# rospy.spin()
 
 
-	def get_map(self, name):
-
-		try:
-			self._graph = ox.graph_from_place(name, network_type='drive')
+	def get_map(self, name):		
+		try: 
+			with open("/home/ahmad/catkin_ws/src/road_processing_planning/maps/" + name +'.p', 'rb') as f:
+				self._graph = pickle.load(f) 
 		except:
-			self._graph = ox.graph_from_address(name, distance=250, network_type='drive')
+			
+			try:
+
+				self._graph = ox.graph_from_place(name, network_type='drive')
+			except:
+				self._graph = ox.graph_from_address(name, distance=250, network_type='drive')
 	
+			with open("/home/ahmad/catkin_ws/src/road_processing_planning/maps/"+ name+ '.p', 'wb') as f:
+				pickle.dump(self._graph, f)
+
 		self._graph_proj = ox.project_graph(self._graph)
 		
 		self._nodes, self._edges = ox.graph_to_gdfs(self._graph_proj, nodes=True, edges=True)
@@ -87,10 +96,10 @@ class path_processing_planning:
 		place_name = str(place_name)
 		length = len(place_name)
 		place_name = place_name[13:length-1]
-		print(place_name)
-		print(type(place_name))
+
 		self.get_map(place_name)
 		self.plan_path()
 		self.generate_path_points()
 		self.draw_route()
+
 		return self._path
