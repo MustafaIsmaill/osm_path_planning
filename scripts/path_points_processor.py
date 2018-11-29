@@ -9,6 +9,7 @@ from geometry_msgs.msg import PoseStamped
 
 import time
 import cPickle as pickle
+import os
 
 class path_processing_planning:
 
@@ -29,8 +30,14 @@ class path_processing_planning:
 
 
 	def get_map(self, name):		
+		
+		file_path= os.path.dirname(os.path.abspath(__file__))
+
+		file_path= file_path[:len (file_path) -7] + 'maps/'
+
+		print(file_path)
 		try: 
-			with open("/home/ahmad/catkin_ws/src/road_processing_planning/maps/" + name +'.p', 'rb') as f:
+			with open(file_path + name +'.p', 'rb') as f:
 				self._graph = pickle.load(f) 
 		except:
 			
@@ -40,7 +47,7 @@ class path_processing_planning:
 			except:
 				self._graph = ox.graph_from_address(name, distance=250, network_type='drive')
 	
-			with open("/home/ahmad/catkin_ws/src/road_processing_planning/maps/"+ name+ '.p', 'wb') as f:
+			with open(file_path + name+ '.p', 'wb') as f:
 				pickle.dump(self._graph, f)
 
 		self._graph_proj = ox.project_graph(self._graph)
