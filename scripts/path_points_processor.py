@@ -98,6 +98,8 @@ class path_processing_planning:
 
 	def draw_route(self):
 		ox.plot_graph_route(self._graph_proj, self._route,route_linewidth=6)
+		self._subgraph= self._graph_proj.subgraph(self._route)
+		fig, ax = ox.plot_graph(self._subgraph)
 
 	def return_path(self, place_name):
 		place_name = str(place_name)
