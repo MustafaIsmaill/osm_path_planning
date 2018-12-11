@@ -80,13 +80,13 @@ class path_processing_planning:
 
 
 		self._origin=(self._starty,self._startx)
-		print("start point from ROSbag: (UTMy,UTMx)")
-		print(self._origin) 
+		rospy.loginfo("start point from ROSbag: (UTMy,UTMx)")
+		rospy.loginfo(self._origin) 
 		self._destination=(self._endy,self._endx)
-		print("Goal Point Entered: (UTMy,UTMx)")
-		print(self._destination) # (435013.91403567925, 4465164.157857422)
+		rospy.loginfo("Goal Point Entered: (UTMy,UTMx)")
+		rospy.loginfo(self._destination) # (434764 4464870)
 		self._origin_node = ox.get_nearest_node(self._graph_proj, self._origin, method='euclidean')
-		self._destination_node = ox.get_nearest_node(self._graph_proj, self._destination)
+		self._destination_node = ox.get_nearest_node(self._graph_proj, self._destination, method= 'euclidean')
 		self._route = nx.dijkstra_path(G= self._graph_proj, source= self._origin_node,
 		 target=self._destination_node , weight='length')
 		
