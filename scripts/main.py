@@ -12,10 +12,15 @@ import time
 
 from path_points_processor import *
 
-def service_callback(place_name):
+
+
+
+def service_callback(goal):
+
 
 	path = path_processing_planning()
-	return path.return_path(place_name)
+	return path.return_path(goal)
+
 
 if __name__ == '__main__':
 	try:
@@ -31,3 +36,4 @@ if __name__ == '__main__':
 
 
 #'Universidad Carlos III de Madrid, 30, Avenida de la Universidad'
+#string place_name

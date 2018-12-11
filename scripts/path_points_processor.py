@@ -6,8 +6,10 @@ import networkx as nx
 
 from nav_msgs.msg import Path
 from geometry_msgs.msg import PoseStamped
+from sensor_msgs.msg import NavSatFix
 
 import time
+import utm
 import cPickle as pickle
 import os
 
@@ -19,9 +21,11 @@ class path_processing_planning:
 
 		# self.route_pub = rospy.Publisher("route_points", Path)
 		# self._rate = rospy.Rate(1)
-
+		
 		self._route_pointx = []
 		self._route_pointy = []
+
+		self._NavSatFix= NavSatFix()
 
 		self._path = Path()
 		self._path.header.stamp = rospy.Time.now()
@@ -29,13 +33,25 @@ class path_processing_planning:
 		# rospy.spin()
 
 
+	
+	def get_start(self):
+
+		# rospy.Subscriber('/fix', NavSatFix, self.get_start)
+		gps= rospy.wait_for_message('/fix', NavSatFix, timeout=None)
+		self._longitude= gps.longitude
+		self._latitude=gps.latitude
+		self._UTMx, self._UTMy, _, _ = utm.from_latlon(self._latitude, self._longitude)
+	def get_end(self, end_points):
+		
+		self._endx=end_points.x
+		self._endy=end_points.y
+		
 	def get_map(self, name):		
 		
 		file_path= os.path.dirname(os.path.abspath(__file__))
 
 		file_path= file_path[:len (file_path) -7] + 'maps/'
 
-		print(file_path)
 		try: 
 			with open(file_path + name +'.p', 'rb') as f:
 				self._graph = pickle.load(f) 
@@ -56,16 +72,21 @@ class path_processing_planning:
 	
 	def plan_path(self):
 
-		self._startx = self._nodes[:].x[(self._edges[:].v[34])]
-		self._starty = self._nodes[:].y[(self._edges[:].v[34])]
-		self._endx = self._nodes[:].x[(self._edges[:].u[34])]
-		self._endy = self._nodes[:].y[(self._edges[:].u[34])]
+		self._startx = self._UTMx
+		self._starty = self._UTMy
 
-		self._origin=(self._startx,self._starty)
-		self._destination=(self._endx,self._endy)
-		self._origin_node = ox.get_nearest_node(self._graph_proj, self._origin)
+		# self._endx = 434763
+		# self._endy = 4464870
+
+
+		self._origin=(self._starty,self._startx)
+		print("start point from ROSbag: (UTMy,UTMx)")
+		print(self._origin) 
+		self._destination=(self._endy,self._endx)
+		print("Goal Point Entered: (UTMy,UTMx)")
+		print(self._destination) # (435013.91403567925, 4465164.157857422)
+		self._origin_node = ox.get_nearest_node(self._graph_proj, self._origin, method='euclidean')
 		self._destination_node = ox.get_nearest_node(self._graph_proj, self._destination)
-
 		self._route = nx.dijkstra_path(G= self._graph_proj, source= self._origin_node,
 		 target=self._destination_node , weight='length')
 		
@@ -89,23 +110,16 @@ class path_processing_planning:
 
 		 	self._path.poses.append(pose_st)
 
-	# def publish_path_points(self):
-
-	# 	while not rospy.is_shutdown():
-	# 		print("publishing...")
-	# 		self.route_pub.publish(self._path)
-	# 		self._rate.sleep()
-
 	def draw_route(self):
 		ox.plot_graph_route(self._graph_proj, self._route,route_linewidth=6)
 		self._subgraph= self._graph_proj.subgraph(self._route)
 		fig, ax = ox.plot_graph(self._subgraph)
 
-	def return_path(self, place_name):
-		place_name = str(place_name)
-		length = len(place_name)
-		place_name = place_name[13:length-1]
-
+	def return_path(self, goal):
+		
+		place_name= 'leganes,Spain'
+		self.get_end(goal)
+		self.get_start()
 		self.get_map(place_name)
 		self.plan_path()
 		self.generate_path_points()

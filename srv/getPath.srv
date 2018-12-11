@@ -1,3 +1,4 @@
-string place_name
+float64 x
+float64 y
 ---
 nav_msgs/Path path
