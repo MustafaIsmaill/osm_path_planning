@@ -1,5 +1,5 @@
 <launch>
 
-  <node pkg="road_processing_planning" type="main.py" name="road_processor_planner"/>
+  <node pkg="road_processing_planning" type="main.py" name="road_processor_planner" output="screen"/>
 
 </launch>
