@@ -38,9 +38,10 @@ class path_processing_planning:
 
 		# rospy.Subscriber('/fix', NavSatFix, self.get_start)
 		gps= rospy.wait_for_message('/fix', NavSatFix, timeout=None)
-		self._longitude= gps.longitude
-		self._latitude=gps.latitude
-		self._UTMx, self._UTMy, _, _ = utm.from_latlon(self._latitude, self._longitude)
+		self._start_lon= gps.longitude
+		self._start_lat=gps.latitude
+		self.latlon_start= (self._start_lat, self._start_lon)
+		self._start_UTMx, self._start_UTMy, _, _ = utm.from_latlon(self._start_lat,self._start_lon )
 	def get_end(self, end_points):
 		
 		self._endx=end_points.x
@@ -50,20 +51,24 @@ class path_processing_planning:
 		
 		file_path= os.path.dirname(os.path.abspath(__file__))
 
-		file_path= file_path[:len (file_path) -7] + 'maps/'
-
+		file_path_map= file_path[:len (file_path) -7] + 'maps/'
+		
+		self.file_path_subgraph=file_path[:len (file_path) -7] + 'subgraphs/'
+		rospy.loginfo(self.file_path_subgraph)
 		try: 
-			with open(file_path + name +'.p', 'rb') as f:
+			with open(file_path_map + name +'.p', 'rb') as f:
 				self._graph = pickle.load(f) 
+				rospy.loginfo("loading offline map")
 		except:
 			
 			try:
 
 				self._graph = ox.graph_from_place(name, network_type='drive')
+				rospy.loginfo("could not load offline, downloading trial 1")
 			except:
 				self._graph = ox.graph_from_address(name, distance=250, network_type='drive')
-	
-			with open(file_path + name+ '.p', 'wb') as f:
+				rospy.loginfo("downloading trial 2")
+			with open(file_path_map + name+ '.p', 'wb') as f:
 				pickle.dump(self._graph, f)
 
 		self._graph_proj = ox.project_graph(self._graph)
@@ -72,8 +77,8 @@ class path_processing_planning:
 	
 	def plan_path(self):
 
-		self._startx = self._UTMx
-		self._starty = self._UTMy
+		self._startx = self._start_UTMx
+		self._starty = self._start_UTMy
 
 		# self._endx = 434763
 		# self._endy = 4464870
@@ -109,12 +114,44 @@ class path_processing_planning:
 		 	pose_st.pose.position.y = self._route_pointy[i]
 
 		 	self._path.poses.append(pose_st)
+		self._old_UTMx=self._start_UTMx
+		self._old_UTMy=self._start_UTMy
+		ox.plot_graph_route(self._graph_proj,self._route,route_linewidth=6)
+		self.curr_gps = rospy.Subscriber('/fix', NavSatFix,self.draw_subgraph)
+	def draw_subgraph(self,curr_gps):
 
-	def draw_route(self):
-		ox.plot_graph_route(self._graph_proj, self._route,route_linewidth=6)
-		self._subgraph= self._graph_proj.subgraph(self._route)
-		fig, ax = ox.plot_graph(self._subgraph)
+		# ox.plot_graph_route(self._graph_proj, self._route,route_linewidth=6)
+		
+		self.curr=curr_gps
 
+		rospy.loginfo("******************")
+
+
+		self._curr_lat=self.curr.latitude
+		self._curr_lon=self.curr.longitude
+
+		self._curr_UTMx, self._curr_UTMy, _, _ = utm.from_latlon(self._curr_lat, self._curr_lon)
+
+	
+
+		xdiff =self._curr_UTMx - self._old_UTMx
+		ydiff=self._curr_UTMy - self._old_UTMy
+
+		print(abs(xdiff))
+		print(abs(ydiff))
+		if (abs(xdiff) > 25 or abs(ydiff) > 25):
+			
+			print("preparing subgraph")
+			self._curr_point=(self._curr_UTMy, self._curr_UTMx)
+			self._curr_node = ox.get_nearest_node(self._graph_proj, self._curr_point, method='euclidean')
+			self._old_UTMx=self._curr_UTMx
+			self._old_UTMy=self._curr_UTMy
+			subgraph1= nx.ego_graph(self._graph_proj,self._curr_node, radius=2, center=True, undirected=False, distance=None)
+			fig, ax =ox.plot_graph(subgraph1)
+			ox.save_graphml(subgraph1 , filename=self.file_path_subgraph + 'subgraph.xml')
+		
+		else:
+			print("subgraph not ready")
 	def return_path(self, goal):
 		
 		place_name= 'leganes,Spain'
@@ -123,6 +160,6 @@ class path_processing_planning:
 		self.get_map(place_name)
 		self.plan_path()
 		self.generate_path_points()
-		self.draw_route()
+
 
 		return self._path
