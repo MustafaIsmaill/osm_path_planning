@@ -37,6 +37,7 @@ class path_processing_planning:
 	def get_start(self):
 
 		# rospy.Subscriber('/fix', NavSatFix, self.get_start)
+		
 		gps= rospy.wait_for_message('/fix', NavSatFix, timeout=None)
 		self._start_lon= gps.longitude
 		self._start_lat=gps.latitude
@@ -49,32 +50,41 @@ class path_processing_planning:
 		
 	def get_map(self, name):		
 		
+		
+		
 		file_path= os.path.dirname(os.path.abspath(__file__))
 
 		file_path_map= file_path[:len (file_path) -7] + 'maps/'
 		
 		self.file_path_subgraph=file_path[:len (file_path) -7] + 'subgraphs/'
-		rospy.loginfo(self.file_path_subgraph)
+
 		try: 
 			with open(file_path_map + name +'.p', 'rb') as f:
+				
+				rospy.loginfo("Loading Offline map")
 				self._graph = pickle.load(f) 
-				rospy.loginfo("loading offline map")
+					
 		except:
 			
 			try:
 
+				rospy.loginfo("First Downloading Attempt")
 				self._graph = ox.graph_from_place(name, network_type='drive')
-				rospy.loginfo("could not load offline, downloading trial 1")
+				
 			except:
+				rospy.loginfo("First Downloading Attempt Failed, Retrying Download")
 				self._graph = ox.graph_from_address(name, distance=250, network_type='drive')
-				rospy.loginfo("downloading trial 2")
+				
 			with open(file_path_map + name+ '.p', 'wb') as f:
 				pickle.dump(self._graph, f)
 
-		self._graph_proj = ox.project_graph(self._graph)
 		
+		self._graph_proj = ox.project_graph(self._graph)
+
+		x=time.time()
 		self._nodes, self._edges = ox.graph_to_gdfs(self._graph_proj, nodes=True, edges=True)
-	
+		y=time.time()
+		print("time is :" + str (y-x))
 	def plan_path(self):
 
 		self._startx = self._start_UTMx
@@ -129,19 +139,20 @@ class path_processing_planning:
 
 		self._curr_lat=self.curr.latitude
 		self._curr_lon=self.curr.longitude
-
+		
+			
 		self._curr_UTMx, self._curr_UTMy, _, _ = utm.from_latlon(self._curr_lat, self._curr_lon)
 
 	
 
 		xdiff =self._curr_UTMx - self._old_UTMx
 		ydiff=self._curr_UTMy - self._old_UTMy
-
-		print(abs(xdiff))
-		print(abs(ydiff))
+		
+		rospy.loginfo("Distance in x directon: " + str (abs(xdiff)))
+		rospy.loginfo("Distance in y directon: " + str (abs(ydiff)))
 		if (abs(xdiff) > 25 or abs(ydiff) > 25):
-			
-			print("preparing subgraph")
+				
+			rospy.loginfo("Generating subgraph")
 			self._curr_point=(self._curr_UTMy, self._curr_UTMx)
 			self._curr_node = ox.get_nearest_node(self._graph_proj, self._curr_point, method='euclidean')
 			self._old_UTMx=self._curr_UTMx
@@ -149,15 +160,16 @@ class path_processing_planning:
 			subgraph1= nx.ego_graph(self._graph_proj,self._curr_node, radius=2, center=True, undirected=False, distance=None)
 			fig, ax =ox.plot_graph(subgraph1)
 			ox.save_graphml(subgraph1 , filename=self.file_path_subgraph + 'subgraph.xml')
-		
+			
 		else:
-			print("subgraph not ready")
+			rospy.loginfo("distance is less than 25 meters")
 	def return_path(self, goal):
 		
 		place_name= 'leganes,Spain'
-		self.get_end(goal)
-		self.get_start()
 		self.get_map(place_name)
+		rospy.loginfo("Map Loaded Successfully")
+		self.get_start()
+		self.get_end(goal)
 		self.plan_path()
 		self.generate_path_points()
 
