@@ -66,7 +66,7 @@ class path_processing_planning:
 			try:
 
 				rospy.loginfo("First Downloading Attempt")
-				self._graph = ox.graph_from_place(name, network_type='drive')
+				self._graph = ox.graph_from_place(name, network_type='all')
 				self._graph_proj = ox.project_graph(self._graph)
 				ox.save_graphml(self._graph_proj ,folder= file_path_map ,  filename=name +'.xml')
 			except:
@@ -79,7 +79,7 @@ class path_processing_planning:
 
 		self._nodes, self._edges = ox.graph_to_gdfs(self._graph_proj, nodes=True, edges=True)
 		rospy.loginfo("loaded")	
-		
+
 	def plan_path(self):
 
 		self._startx = self._start_UTMx
@@ -121,11 +121,11 @@ class path_processing_planning:
 		 	self._path.poses.append(pose_st)
 		self._old_UTMx=self._start_UTMx
 		self._old_UTMy=self._start_UTMy
-		ox.plot_graph_route(self._graph_proj,self._route,route_linewidth=6)
+		# ox.plot_graph_route(self._graph_proj,self._route,route_linewidth=6 ,save=True)
 		self.curr_gps = rospy.Subscriber('/fix', NavSatFix,self.draw_subgraph)
+
 	def draw_subgraph(self,curr_gps):
 
-		# ox.plot_graph_route(self._graph_proj, self._route,route_linewidth=6)
 		
 		self.curr=curr_gps
 
