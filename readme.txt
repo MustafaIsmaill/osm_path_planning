@@ -1,4 +1,4 @@
-#﻿road_processing_planning#
+road_processing_planning
 
 The package is used Construct paths in street networks from OpenStreetMaps using python and ROS. The package publishes the path waypoints for the vehicle and successive subgraphs.
 
