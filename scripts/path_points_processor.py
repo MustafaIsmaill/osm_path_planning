@@ -59,32 +59,27 @@ class path_processing_planning:
 		self.file_path_subgraph=file_path[:len (file_path) -7] + 'subgraphs/'
 
 		try: 
-			with open(file_path_map + name +'.p', 'rb') as f:
-				
-				rospy.loginfo("Loading Offline map")
-				self._graph = pickle.load(f) 
+			self._graph_proj= ox.load_graphml( name +'.xml', folder= file_path_map)
 					
 		except:
-			
+
 			try:
 
 				rospy.loginfo("First Downloading Attempt")
 				self._graph = ox.graph_from_place(name, network_type='drive')
-				
+				self._graph_proj = ox.project_graph(self._graph)
+				ox.save_graphml(self._graph_proj ,folder= file_path_map ,  filename=name +'.xml')
 			except:
 				rospy.loginfo("First Downloading Attempt Failed, Retrying Download")
 				self._graph = ox.graph_from_address(name, distance=250, network_type='drive')
-				
-			with open(file_path_map + name+ '.p', 'wb') as f:
-				pickle.dump(self._graph, f)
+				self._graph_proj = ox.project_graph(self._graph)
+				ox.save_graphml(self._graph_proj ,folder= file_path_map ,  filename=name +'.xml')
+			
 
-		
-		self._graph_proj = ox.project_graph(self._graph)
 
-		x=time.time()
 		self._nodes, self._edges = ox.graph_to_gdfs(self._graph_proj, nodes=True, edges=True)
-		y=time.time()
-		print("time is :" + str (y-x))
+		rospy.loginfo("loaded")	
+		
 	def plan_path(self):
 
 		self._startx = self._start_UTMx
