@@ -3,11 +3,13 @@
 import rospy
 import osmnx as ox
 import networkx as nx
+import matplotlib.pyplot as plt
 
 from nav_msgs.msg import Path
 from geometry_msgs.msg import PoseStamped
 from sensor_msgs.msg import NavSatFix
 from shapely.geometry import Point
+
 
 import time
 import math
@@ -102,6 +104,7 @@ class path_processing_planning:
 		self._destination_node = ox.get_nearest_node(self._graph_proj, self._destination, method= 'euclidean')
 		self._route = nx.dijkstra_path(G= self._graph_proj, source= self._origin_node,
 		 target=self._destination_node , weight='length')
+		# ox.plot_graph_route(self._graph_proj, self._route,route_linewidth=6)
 
 		for j in range(0, len(self._edges)):
 			
@@ -159,10 +162,11 @@ class path_processing_planning:
 
 		 	self._path.poses.append(pose_st)
 
-
+		self.plot_route_points()
 		self._old_UTMx=self._start_UTMx
 		self._old_UTMy=self._start_UTMy
 		self.curr_gps = rospy.Subscriber('/fix', NavSatFix,self.draw_subgraph)
+
 
 	def draw_subgraph(self,curr_gps):
 
@@ -201,6 +205,27 @@ class path_processing_planning:
 				rospy.loginfo("distance is less than 25 meters")
 		else:
 			rospy.loginfo("nan signal")
+
+	def plot_route_points(self):
+		fig, ax = plt.subplots()
+		self._edges.plot(ax=ax)
+		self._nodes.plot(ax=ax)
+		
+		ax.plot(self._startx,self._starty, 'r+')
+		ax.plot(self._endx,self._endy, 'r+')
+
+
+		for m in range(0,len(self._path.poses)):
+			# plt.plot(self._path.poses[m].pose.position.x,self._path.poses[m].pose.position.y)
+			
+			ax.plot(self._path.poses[m].pose.position.x,self._path.poses[m].pose.position.y ,'ro')
+
+
+		ax.plot(self._path.poses[0].pose.position.x,self._path.poses[0].pose.position.y,'b+')
+		ax.plot(self._path.poses[len(self._path.poses)-1].pose.position.x,
+			self._path.poses[len(self._path.poses)-1].pose.position.y,'b+')
+
+		plt.show()
 	def return_path(self, goal):
 		
 		place_name= 'leganes,Spain'
@@ -209,6 +234,10 @@ class path_processing_planning:
 		self.get_end(goal)
 		self.plan_path()
 		self.generate_path_points()
+		#self.plot_route_points()
+
+		
+		
 
 
 		return self._path
