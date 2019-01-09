@@ -42,7 +42,7 @@ class path_processing_planning:
 
 		# rospy.Subscriber('/fix', NavSatFix, self.get_start)
 		
-		gps= rospy.wait_for_message('/fix', NavSatFix, timeout=None)
+		gps= rospy.wait_for_message('ada/fix', NavSatFix, timeout=None)
 		self._start_lon= gps.longitude
 		self._start_lat=gps.latitude
 		self.latlon_start= (self._start_lat, self._start_lon)
@@ -166,7 +166,7 @@ class path_processing_planning:
 		self.plot_route_points()
 		self._old_UTMx=self._start_UTMx
 		self._old_UTMy=self._start_UTMy
-		self.curr_gps = rospy.Subscriber('/fix', NavSatFix,self.draw_subgraph)
+		self.curr_gps = rospy.Subscriber('ada/fix', NavSatFix,self.draw_subgraph)
 
 
 	def draw_subgraph(self,curr_gps):
