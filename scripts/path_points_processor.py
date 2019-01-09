@@ -9,6 +9,7 @@ from nav_msgs.msg import Path
 from geometry_msgs.msg import PoseStamped
 from sensor_msgs.msg import NavSatFix
 from shapely.geometry import Point
+import urllib
 
 
 import time
@@ -197,9 +198,17 @@ class path_processing_planning:
 				self._curr_node = ox.get_nearest_node(self._graph_proj, self._curr_point, method='euclidean')
 				self._old_UTMx=self._curr_UTMx
 				self._old_UTMy=self._curr_UTMy
-				subgraph1= nx.ego_graph(self._graph_proj,self._curr_node, radius=2, center=True, undirected=False, distance=None)
-				fig, ax =ox.plot_graph(subgraph1)
-				ox.save_graphml(subgraph1 , filename=self.file_path_subgraph + 'subgraph.xml')
+				self.curr_gps_point=(self._curr_lat,self._curr_lon)
+				north, south, east, west= ox.bbox_from_point(self.curr_gps_point, distance=50)
+				rospy.loginfo(north)
+				rospy.loginfo(south)
+				rospy.loginfo(east)
+				rospy.loginfo(west)
+				url_name = 'https://overpass-api.de/api/map?bbox=' + str(west) + "," + str (south) + "," + str(east) + "," + str(north)
+				print(url_name)
+
+				urllib.urlretrieve(url_name, self.file_path_subgraph + 'subgraph.xml')
+
 			
 			else:
 				rospy.loginfo("distance is less than 25 meters")
@@ -235,9 +244,5 @@ class path_processing_planning:
 		self.plan_path()
 		self.generate_path_points()
 		#self.plot_route_points()
-
-		
-		
-
 
 		return self._path

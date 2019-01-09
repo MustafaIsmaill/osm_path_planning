@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<launch>
+
+	<node pkg="tf" type="static_transform_publisher" name="map_odom_punlisher" args="0 3 0 0 0 0 /map /odom 20" clear_params="true" />
+
+	<!--<node pkg="tf" type="static_transform_publisher" name="odom_reawheel_publisher" args="1 0 0 0 0 0 /odom /rear_wheel_axis 20"  clear_params="true" />-->
+
+	<node pkg="tf" type="static_transform_publisher" name="rearwheel_baselink" args="0 0 4 0 0 0 /rear_wheel_axis /baselink 20"  clear_params="true" />
+
+</launch>
