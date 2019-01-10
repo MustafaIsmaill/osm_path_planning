@@ -10,7 +10,7 @@ from geometry_msgs.msg import PoseStamped
 from sensor_msgs.msg import NavSatFix
 from shapely.geometry import Point
 import urllib
-
+import yaml
 
 import time
 import math
@@ -33,6 +33,11 @@ class path_processing_planning:
 
 		self._path = Path()
 		self._path.header.stamp = rospy.Time.now()
+		self.file_path= os.path.dirname(os.path.abspath(__file__))
+		document = open('/home/ahmad/catkin_ws/src/trial_srv/config/document.yaml', 'r')
+		parsed = yaml.load(document)
+		self.place_name= parsed['place_name']
+		self.grid_map_size= parsed['grid_map_size']
 
 		# rospy.spin()
 
@@ -56,11 +61,11 @@ class path_processing_planning:
 		
 		
 		
-		file_path= os.path.dirname(os.path.abspath(__file__))
 
-		file_path_map= file_path[:len (file_path) -7] + 'maps/'
+
+		file_path_map= self.file_path[:len (self.file_path) -7] + 'maps/'
 		
-		self.file_path_subgraph=file_path[:len (file_path) -7] + 'subgraphs/'
+		self.file_path_subgraph=self.file_path[:len (self.file_path) -7] + 'subgraphs/'
 
 		try: 
 			self._graph_proj= ox.load_graphml( name +'.xml', folder= file_path_map)
@@ -105,7 +110,7 @@ class path_processing_planning:
 		self._destination_node = ox.get_nearest_node(self._graph_proj, self._destination, method= 'euclidean')
 		self._route = nx.dijkstra_path(G= self._graph_proj, source= self._origin_node,
 		 target=self._destination_node , weight='length')
-		# ox.plot_graph_route(self._graph_proj, self._route,route_linewidth=6)
+		#ox.plot_graph_route(self._graph_proj, self._route,route_linewidth=6)
 
 		for j in range(0, len(self._edges)):
 			
@@ -199,7 +204,7 @@ class path_processing_planning:
 				self._old_UTMx=self._curr_UTMx
 				self._old_UTMy=self._curr_UTMy
 				self.curr_gps_point=(self._curr_lat,self._curr_lon)
-				north, south, east, west= ox.bbox_from_point(self.curr_gps_point, distance=50)
+				north, south, east, west= ox.bbox_from_point(self.curr_gps_point, distance=self.grid_map_size)
 				rospy.loginfo(north)
 				rospy.loginfo(south)
 				rospy.loginfo(east)
@@ -234,15 +239,15 @@ class path_processing_planning:
 		ax.plot(self._path.poses[len(self._path.poses)-1].pose.position.x,
 			self._path.poses[len(self._path.poses)-1].pose.position.y,'b+')
 
-		plt.show()
+		#plt.show()
+		
 	def return_path(self, goal):
 		
-		place_name= 'leganes,Spain'
-		self.get_map(place_name)
+		self.get_map(self.place_name)
 		self.get_start()
 		self.get_end(goal)
 		self.plan_path()
 		self.generate_path_points()
 		#self.plot_route_points()
-
+		rospy.loginfo("************Done**********")
 		return self._path
