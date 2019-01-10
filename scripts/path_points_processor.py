@@ -34,7 +34,7 @@ class path_processing_planning:
 		self._path = Path()
 		self._path.header.stamp = rospy.Time.now()
 		self.file_path= os.path.dirname(os.path.abspath(__file__))
-		document = open('/home/ahmad/catkin_ws/src/trial_srv/config/document.yaml', 'r')
+		document = open(self.file_path[:len (self.file_path) -7] + 'config/document.yaml', 'r')
 		parsed = yaml.load(document)
 		self.place_name= parsed['place_name']
 		self.grid_map_size= parsed['grid_map_size']
