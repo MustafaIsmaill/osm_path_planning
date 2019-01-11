@@ -4,6 +4,9 @@ The package is used Construct paths in street networks from OpenStreetMaps using
 
 How it works:
 
+"Configuration Stage"
+$ sh initial-config.sh
+
 Run the following commands from the terminal:
 
 1. roslaunch road_processing_planning route_points.launch
