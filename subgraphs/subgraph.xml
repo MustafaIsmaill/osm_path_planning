@@ -1,29 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <osm version="0.6" generator="Overpass API 0.7.55.5 2ca3f387">
 <note>The data included in this document is from www.openstreetmap.org. The data is made available under ODbL.</note>
-<meta osm_base="2019-01-10T12:39:02Z"/>
+<meta osm_base="2019-01-11T15:03:03Z"/>
 
-  <bounds minlat="40.3086438" minlon="-3.7730373" maxlat="40.3095446" maxlon="-3.7718606"/>
+  <bounds minlat="40.3084564" minlon="-3.7737963" maxlat="40.3093572" maxlon="-3.7726195"/>
 
-  <node id="307990032" lat="40.3125352" lon="-3.7742281" version="6" timestamp="2011-07-13T12:45:20Z" changeset="8712309" uid="220932" user="mor"/>
-  <node id="307990307" lat="40.3054726" lon="-3.7709161" version="2" timestamp="2011-06-23T20:34:05Z" changeset="8526649" uid="87939" user="antecessor">
-    <tag k="power" v="tower"/>
-  </node>
-  <node id="307990423" lat="40.3038798" lon="-3.7701528" version="3" timestamp="2014-02-21T18:00:03Z" changeset="20698769" uid="777223" user="Serfuen">
-    <tag k="power" v="tower"/>
-  </node>
-  <node id="307990427" lat="40.3072858" lon="-3.7718295" version="2" timestamp="2011-06-23T20:34:08Z" changeset="8526649" uid="87939" user="antecessor">
-    <tag k="power" v="tower"/>
-  </node>
   <node id="308217779" lat="40.3124031" lon="-3.7743962" version="17" timestamp="2014-06-15T10:42:41Z" changeset="22941222" uid="42055" user="polkillas"/>
   <node id="308217780" lat="40.3142740" lon="-3.7666751" version="10" timestamp="2014-06-15T10:42:41Z" changeset="22941222" uid="42055" user="polkillas"/>
   <node id="308217781" lat="40.3183150" lon="-3.7584378" version="10" timestamp="2014-06-15T10:42:41Z" changeset="22941222" uid="42055" user="polkillas"/>
   <node id="308217785" lat="40.3156380" lon="-3.7588162" version="9" timestamp="2014-06-15T10:17:58Z" changeset="22941222" uid="42055" user="polkillas"/>
   <node id="308217786" lat="40.3122415" lon="-3.7658058" version="9" timestamp="2014-06-15T10:17:58Z" changeset="22941222" uid="42055" user="polkillas"/>
   <node id="308217787" lat="40.3086608" lon="-3.7761211" version="9" timestamp="2013-12-29T15:09:57Z" changeset="19697881" uid="777223" user="Serfuen"/>
-  <node id="310086970" lat="40.2612332" lon="-3.8742034" version="2" timestamp="2012-07-07T17:29:48Z" changeset="12142278" uid="72235" user="Basstoelpel">
-    <tag k="power" v="tower"/>
-  </node>
   <node id="315060127" lat="40.3093984" lon="-3.7716348" version="14" timestamp="2011-07-13T12:45:02Z" changeset="8712309" uid="220932" user="mor"/>
   <node id="315060128" lat="40.3097023" lon="-3.7709747" version="18" timestamp="2011-07-13T12:45:02Z" changeset="8712309" uid="220932" user="mor"/>
   <node id="315060129" lat="40.3099972" lon="-3.7703378" version="14" timestamp="2011-07-13T12:45:20Z" changeset="8712309" uid="220932" user="mor"/>
@@ -43,119 +30,11 @@
   <node id="356281102" lat="40.3088825" lon="-3.7737787" version="2" timestamp="2013-12-29T15:09:58Z" changeset="19697881" uid="777223" user="Serfuen"/>
   <node id="356281328" lat="40.3157859" lon="-3.7578712" version="5" timestamp="2016-06-17T12:45:12Z" changeset="40093116" uid="3649461" user="Cuenqui"/>
   <node id="356346421" lat="40.3146874" lon="-3.7601586" version="3" timestamp="2011-07-13T12:45:32Z" changeset="8712309" uid="220932" user="mor"/>
-  <node id="429235404" lat="40.2556100" lon="-3.8482905" version="2" timestamp="2009-08-17T13:42:29Z" changeset="2177471" uid="13203" user="bahnpirat">
-    <tag k="power" v="tower"/>
-    <tag k="source" v="Yahoo"/>
-  </node>
-  <node id="429235422" lat="40.2562585" lon="-3.8451577" version="2" timestamp="2009-08-17T13:42:30Z" changeset="2177471" uid="13203" user="bahnpirat">
-    <tag k="power" v="tower"/>
-    <tag k="source" v="Yahoo"/>
-  </node>
-  <node id="429235423" lat="40.2569791" lon="-3.8419477" version="2" timestamp="2009-08-17T13:42:30Z" changeset="2177471" uid="13203" user="bahnpirat">
-    <tag k="power" v="tower"/>
-    <tag k="source" v="Yahoo"/>
-  </node>
-  <node id="429235437" lat="40.2548917" lon="-3.8520103" version="3" timestamp="2012-07-07T17:29:49Z" changeset="12142278" uid="72235" user="Basstoelpel">
-    <tag k="power" v="tower"/>
-    <tag k="source" v="Yahoo"/>
-  </node>
-  <node id="429235454" lat="40.2552825" lon="-3.8544360" version="2" timestamp="2009-08-17T13:42:27Z" changeset="2177471" uid="13203" user="bahnpirat">
-    <tag k="power" v="tower"/>
-    <tag k="source" v="Yahoo"/>
-  </node>
-  <node id="429235455" lat="40.2563961" lon="-3.8613282" version="2" timestamp="2009-08-17T13:42:26Z" changeset="2177471" uid="13203" user="bahnpirat">
-    <tag k="power" v="tower"/>
-    <tag k="source" v="Yahoo"/>
-  </node>
-  <node id="429235479" lat="40.2570396" lon="-3.8650436" version="3" timestamp="2012-07-07T17:29:49Z" changeset="12142278" uid="72235" user="Basstoelpel">
-    <tag k="power" v="tower"/>
-    <tag k="source" v="Yahoo"/>
-  </node>
-  <node id="429235938" lat="40.2576799" lon="-3.8384715" version="2" timestamp="2009-08-17T13:42:30Z" changeset="2177471" uid="13203" user="bahnpirat">
-    <tag k="power" v="tower"/>
-    <tag k="source" v="Yahoo"/>
-  </node>
-  <node id="429235970" lat="40.2582891" lon="-3.8352014" version="2" timestamp="2009-08-17T13:42:30Z" changeset="2177471" uid="13203" user="bahnpirat">
-    <tag k="power" v="tower"/>
-    <tag k="source" v="Yahoo"/>
-  </node>
-  <node id="429236000" lat="40.2607191" lon="-3.8256484" version="2" timestamp="2009-08-17T13:42:31Z" changeset="2177471" uid="13203" user="bahnpirat">
-    <tag k="power" v="tower"/>
-    <tag k="source" v="Yahoo"/>
-  </node>
-  <node id="429236328" lat="40.2631229" lon="-3.8192969" version="2" timestamp="2009-08-17T13:42:31Z" changeset="2177471" uid="13203" user="bahnpirat">
-    <tag k="power" v="tower"/>
-    <tag k="source" v="Yahoo"/>
-  </node>
-  <node id="469788821" lat="40.2559245" lon="-3.8584529" version="1" timestamp="2009-08-17T13:42:27Z" changeset="2177471" uid="13203" user="bahnpirat">
-    <tag k="power" v="tower"/>
-    <tag k="source" v="Yahoo"/>
-  </node>
-  <node id="469788856" lat="40.2590174" lon="-3.8319110" version="2" timestamp="2012-07-07T17:29:49Z" changeset="12142278" uid="72235" user="Basstoelpel">
-    <tag k="power" v="tower"/>
-    <tag k="source" v="Yahoo"/>
-  </node>
-  <node id="469788860" lat="40.2597678" lon="-3.8282941" version="2" timestamp="2012-07-07T17:29:49Z" changeset="12142278" uid="72235" user="Basstoelpel">
-    <tag k="power" v="tower"/>
-    <tag k="source" v="Yahoo"/>
-  </node>
-  <node id="469788865" lat="40.2617016" lon="-3.8229962" version="1" timestamp="2009-08-17T13:42:31Z" changeset="2177471" uid="13203" user="bahnpirat">
-    <tag k="power" v="tower"/>
-    <tag k="source" v="Yahoo"/>
-  </node>
-  <node id="469788873" lat="40.2645441" lon="-3.8155032" version="1" timestamp="2009-08-17T13:42:32Z" changeset="2177471" uid="13203" user="bahnpirat">
-    <tag k="power" v="tower"/>
-    <tag k="source" v="Yahoo"/>
-  </node>
-  <node id="469788877" lat="40.2672359" lon="-3.8081733" version="1" timestamp="2009-08-17T13:42:32Z" changeset="2177471" uid="13203" user="bahnpirat">
-    <tag k="power" v="tower"/>
-    <tag k="source" v="Yahoo"/>
-  </node>
-  <node id="469788880" lat="40.2699865" lon="-3.8006202" version="1" timestamp="2009-08-17T13:42:32Z" changeset="2177471" uid="13203" user="bahnpirat">
-    <tag k="power" v="tower"/>
-    <tag k="source" v="Yahoo"/>
-  </node>
-  <node id="469788883" lat="40.2715844" lon="-3.7963201" version="1" timestamp="2009-08-17T13:42:32Z" changeset="2177471" uid="13203" user="bahnpirat">
-    <tag k="power" v="tower"/>
-    <tag k="source" v="Yahoo"/>
-  </node>
-  <node id="469788885" lat="40.2727632" lon="-3.7931615" version="1" timestamp="2009-08-17T13:42:32Z" changeset="2177471" uid="13203" user="bahnpirat">
-    <tag k="power" v="tower"/>
-    <tag k="source" v="Yahoo"/>
-  </node>
-  <node id="469788888" lat="40.2739223" lon="-3.7901660" version="1" timestamp="2009-08-17T13:42:33Z" changeset="2177471" uid="13203" user="bahnpirat">
-    <tag k="power" v="tower"/>
-    <tag k="source" v="Yahoo"/>
-  </node>
-  <node id="469788890" lat="40.2754219" lon="-3.7860376" version="1" timestamp="2009-08-17T13:42:33Z" changeset="2177471" uid="13203" user="bahnpirat">
-    <tag k="power" v="tower"/>
-    <tag k="source" v="Yahoo"/>
-  </node>
-  <node id="469788892" lat="40.2763518" lon="-3.7834884" version="1" timestamp="2009-08-17T13:42:33Z" changeset="2177471" uid="13203" user="bahnpirat">
-    <tag k="power" v="tower"/>
-    <tag k="source" v="Yahoo"/>
-  </node>
-  <node id="469788894" lat="40.2778055" lon="-3.7800637" version="1" timestamp="2009-08-17T13:42:33Z" changeset="2177471" uid="13203" user="bahnpirat">
-    <tag k="power" v="tower"/>
-    <tag k="source" v="Yahoo"/>
-  </node>
-  <node id="469788896" lat="40.2793836" lon="-3.7763301" version="1" timestamp="2009-08-17T13:42:33Z" changeset="2177471" uid="13203" user="bahnpirat">
-    <tag k="power" v="tower"/>
-    <tag k="source" v="Yahoo"/>
-  </node>
-  <node id="1336027190" lat="40.2960385" lon="-3.7662440" version="1" timestamp="2011-06-23T20:33:30Z" changeset="8526649" uid="87939" user="antecessor">
-    <tag k="power" v="tower"/>
-  </node>
-  <node id="1336027389" lat="40.3004176" lon="-3.7684044" version="1" timestamp="2011-06-23T20:33:38Z" changeset="8526649" uid="87939" user="antecessor">
-    <tag k="power" v="tower"/>
-  </node>
-  <node id="1336027499" lat="40.2982859" lon="-3.7673558" version="1" timestamp="2011-06-23T20:33:43Z" changeset="8526649" uid="87939" user="antecessor">
-    <tag k="power" v="tower"/>
-  </node>
   <node id="1360319148" lat="40.3087335" lon="-3.7735606" version="1" timestamp="2011-07-13T12:43:37Z" changeset="8712309" uid="220932" user="mor"/>
+  <node id="1360319302" lat="40.3104105" lon="-3.7746556" version="1" timestamp="2011-07-13T12:43:40Z" changeset="8712309" uid="220932" user="mor"/>
   <node id="1360319363" lat="40.3103043" lon="-3.7690310" version="1" timestamp="2011-07-13T12:43:42Z" changeset="8712309" uid="220932" user="mor"/>
-  <node id="1360319486" lat="40.3108661" lon="-3.7732892" version="1" timestamp="2011-07-13T12:43:47Z" changeset="8712309" uid="220932" user="mor"/>
   <node id="1360319547" lat="40.3092074" lon="-3.7718171" version="1" timestamp="2011-07-13T12:43:49Z" changeset="8712309" uid="220932" user="mor"/>
+  <node id="1360319551" lat="40.3121993" lon="-3.7756586" version="2" timestamp="2016-12-16T15:36:46Z" changeset="44450579" uid="3649461" user="Cuenqui"/>
   <node id="1360319608" lat="40.3103072" lon="-3.7696619" version="1" timestamp="2011-07-13T12:43:51Z" changeset="8712309" uid="220932" user="mor"/>
   <node id="1360319613" lat="40.3104445" lon="-3.7688930" version="1" timestamp="2011-07-13T12:43:51Z" changeset="8712309" uid="220932" user="mor"/>
   <node id="1360319617" lat="40.3123629" lon="-3.7749389" version="2" timestamp="2016-10-17T13:55:17Z" changeset="42960417" uid="3649461" user="Cuenqui"/>
@@ -169,40 +48,10 @@
   <node id="1427820168" lat="40.3100833" lon="-3.7780230" version="2" timestamp="2014-12-14T15:31:44Z" changeset="27460766" uid="777223" user="Serfuen"/>
   <node id="1427820176" lat="40.3104747" lon="-3.7779417" version="2" timestamp="2014-12-14T15:31:44Z" changeset="27460766" uid="777223" user="Serfuen"/>
   <node id="1427820189" lat="40.3120321" lon="-3.7762233" version="1" timestamp="2011-09-09T09:39:45Z" changeset="9252722" uid="33103" user="sergionaranja"/>
-  <node id="1816314429" lat="40.2595058" lon="-3.8694601" version="2" timestamp="2012-08-09T19:48:15Z" changeset="12672796" uid="777223" user="Serfuen">
-    <tag k="power" v="tower"/>
-  </node>
-  <node id="1816314433" lat="40.2604697" lon="-3.8744971" version="2" timestamp="2012-08-09T19:48:15Z" changeset="12672796" uid="777223" user="Serfuen">
-    <tag k="power" v="tower"/>
-  </node>
-  <node id="1816314435" lat="40.2605473" lon="-3.8713028" version="2" timestamp="2012-08-09T19:48:15Z" changeset="12672796" uid="777223" user="Serfuen">
-    <tag k="power" v="tower"/>
-  </node>
-  <node id="1816314439" lat="40.2606533" lon="-3.8744376" version="2" timestamp="2012-08-09T19:48:15Z" changeset="12672796" uid="777223" user="Serfuen">
-    <tag k="power" v="tower"/>
-  </node>
-  <node id="1871339936" lat="40.2708548" lon="-3.7982834" version="1" timestamp="2012-08-18T13:14:35Z" changeset="12772965" uid="777223" user="Serfuen">
-    <tag k="power" v="tower"/>
-  </node>
   <node id="2599740843" lat="40.3086100" lon="-3.7740338" version="1" timestamp="2013-12-29T15:09:50Z" changeset="19697881" uid="777223" user="Serfuen"/>
   <node id="2599740847" lat="40.3086931" lon="-3.7740465" version="1" timestamp="2013-12-29T15:09:50Z" changeset="19697881" uid="777223" user="Serfuen"/>
   <node id="2599740849" lat="40.3087910" lon="-3.7740708" version="1" timestamp="2013-12-29T15:09:50Z" changeset="19697881" uid="777223" user="Serfuen"/>
   <node id="2599740855" lat="40.3092388" lon="-3.7721685" version="1" timestamp="2013-12-29T15:09:50Z" changeset="19697881" uid="777223" user="Serfuen"/>
-  <node id="2683920925" lat="40.2850341" lon="-3.7677467" version="3" timestamp="2016-02-20T22:58:24Z" changeset="37337245" uid="42429" user="42429">
-    <tag k="power" v="tower"/>
-  </node>
-  <node id="2683920936" lat="40.2874077" lon="-3.7619380" version="2" timestamp="2014-12-29T16:26:11Z" changeset="27780508" uid="777223" user="Serfuen">
-    <tag k="power" v="tower"/>
-  </node>
-  <node id="2683920938" lat="40.2888332" lon="-3.7626558" version="2" timestamp="2014-12-29T16:26:11Z" changeset="27780508" uid="777223" user="Serfuen">
-    <tag k="power" v="tower"/>
-  </node>
-  <node id="2683920941" lat="40.2901312" lon="-3.7629961" version="2" timestamp="2014-12-29T16:26:11Z" changeset="27780508" uid="777223" user="Serfuen">
-    <tag k="power" v="tower"/>
-  </node>
-  <node id="2683920943" lat="40.2925572" lon="-3.7644874" version="2" timestamp="2014-12-29T16:26:11Z" changeset="27780508" uid="777223" user="Serfuen">
-    <tag k="power" v="tower"/>
-  </node>
   <node id="2917178483" lat="40.3128898" lon="-3.7644357" version="1" timestamp="2014-06-15T10:17:54Z" changeset="22941222" uid="42055" user="polkillas"/>
   <node id="2917178498" lat="40.3149546" lon="-3.7601460" version="1" timestamp="2014-06-15T10:17:54Z" changeset="22941222" uid="42055" user="polkillas"/>
   <node id="2917178708" lat="40.3130942" lon="-3.7640174" version="1" timestamp="2014-06-15T10:17:54Z" changeset="22941222" uid="42055" user="polkillas"/>
@@ -226,77 +75,18 @@
   <node id="2917205152" lat="40.3151100" lon="-3.7634995" version="1" timestamp="2014-06-15T10:42:39Z" changeset="22941222" uid="42055" user="polkillas"/>
   <node id="2917205154" lat="40.3141839" lon="-3.7626680" version="1" timestamp="2014-06-15T10:42:39Z" changeset="22941222" uid="42055" user="polkillas"/>
   <node id="2917205161" lat="40.3150388" lon="-3.7636443" version="1" timestamp="2014-06-15T10:42:39Z" changeset="22941222" uid="42055" user="polkillas"/>
-  <node id="2980026513" lat="40.2769658" lon="-3.7820420" version="1" timestamp="2014-07-25T19:51:37Z" changeset="24356856" uid="777223" user="Serfuen">
-    <tag k="power" v="tower"/>
-  </node>
   <node id="3234490021" lat="40.3097927" lon="-3.7777791" version="1" timestamp="2014-12-14T15:31:26Z" changeset="27460766" uid="777223" user="Serfuen"/>
   <node id="3234490022" lat="40.3110055" lon="-3.7774640" version="1" timestamp="2014-12-14T15:31:26Z" changeset="27460766" uid="777223" user="Serfuen"/>
-  <node id="4017213177" lat="40.2805415" lon="-3.7735593" version="1" timestamp="2016-02-20T22:58:15Z" changeset="37337245" uid="42429" user="42429">
-    <tag k="power" v="tower"/>
-  </node>
-  <node id="4017213178" lat="40.2815881" lon="-3.7710129" version="1" timestamp="2016-02-20T22:58:15Z" changeset="37337245" uid="42429" user="42429">
-    <tag k="power" v="tower"/>
-  </node>
-  <node id="4017213181" lat="40.3087917" lon="-3.7725702" version="1" timestamp="2016-02-20T22:58:15Z" changeset="37337245" uid="42429" user="42429">
-    <tag k="power" v="tower"/>
-  </node>
   <node id="4248351414" lat="40.3159839" lon="-3.7580850" version="1" timestamp="2016-06-17T12:45:12Z" changeset="40093116" uid="3649461" user="Cuenqui"/>
   <node id="4248351415" lat="40.3161752" lon="-3.7576282" version="1" timestamp="2016-06-17T12:45:12Z" changeset="40093116" uid="3649461" user="Cuenqui"/>
   <node id="4451927710" lat="40.3121481" lon="-3.7755216" version="1" timestamp="2016-10-17T13:55:17Z" changeset="42960417" uid="3649461" user="Cuenqui"/>
-  <way id="39216591" version="9" timestamp="2016-03-03T21:27:21Z" changeset="37597144" uid="42429" user="42429">
-    <nd ref="1816314433"/>
-    <nd ref="1816314439"/>
-    <nd ref="310086970"/>
-    <nd ref="1816314435"/>
-    <nd ref="1816314429"/>
-    <nd ref="429235479"/>
-    <nd ref="429235455"/>
-    <nd ref="469788821"/>
-    <nd ref="429235454"/>
-    <nd ref="429235437"/>
-    <nd ref="429235404"/>
-    <nd ref="429235422"/>
-    <nd ref="429235423"/>
-    <nd ref="429235938"/>
-    <nd ref="429235970"/>
-    <nd ref="469788856"/>
-    <nd ref="469788860"/>
-    <nd ref="429236000"/>
-    <nd ref="469788865"/>
-    <nd ref="429236328"/>
-    <nd ref="469788873"/>
-    <nd ref="469788877"/>
-    <nd ref="469788880"/>
-    <nd ref="1871339936"/>
-    <nd ref="469788883"/>
-    <nd ref="469788885"/>
-    <nd ref="469788888"/>
-    <nd ref="469788890"/>
-    <nd ref="469788892"/>
-    <nd ref="2980026513"/>
-    <nd ref="469788894"/>
-    <nd ref="469788896"/>
-    <nd ref="4017213177"/>
-    <nd ref="4017213178"/>
-    <nd ref="2683920925"/>
-    <nd ref="2683920936"/>
-    <nd ref="2683920938"/>
-    <nd ref="2683920941"/>
-    <nd ref="2683920943"/>
-    <nd ref="1336027190"/>
-    <nd ref="1336027499"/>
-    <nd ref="1336027389"/>
-    <nd ref="307990423"/>
-    <nd ref="307990307"/>
-    <nd ref="307990427"/>
-    <nd ref="4017213181"/>
-    <tag k="cables" v="6"/>
-    <tag k="circuits" v="2"/>
-    <tag k="frequency" v="50"/>
-    <tag k="operator" v="Red Eléctrica de España"/>
-    <tag k="power" v="line"/>
-    <tag k="source:cables" v="survey"/>
-    <tag k="voltage" v="220000"/>
+  <way id="121534525" version="3" timestamp="2016-07-27T12:51:13Z" changeset="41062128" uid="99570" user="avm">
+    <nd ref="1360319551"/>
+    <nd ref="1360319302"/>
+    <nd ref="338641196"/>
+    <tag k="highway" v="living_street"/>
+    <tag k="maxspeed" v="20"/>
+    <tag k="name" v="Calle Ángel Nieto"/>
   </way>
   <way id="121534539" version="3" timestamp="2016-07-27T12:51:13Z" changeset="41062128" uid="99570" user="avm">
     <nd ref="338641198"/>
@@ -305,14 +95,6 @@
     <tag k="highway" v="living_street"/>
     <tag k="maxspeed" v="20"/>
     <tag k="name" v="Calle Pedro Martínez de la Rosa"/>
-  </way>
-  <way id="121534606" version="3" timestamp="2016-07-27T12:51:13Z" changeset="41062128" uid="99570" user="avm">
-    <nd ref="1360319780"/>
-    <nd ref="1360319486"/>
-    <nd ref="307990032"/>
-    <tag k="highway" v="living_street"/>
-    <tag k="maxspeed" v="20"/>
-    <tag k="name" v="Calle Niki Lauda"/>
   </way>
   <way id="254161900" version="2" timestamp="2015-02-12T18:07:57Z" changeset="28801440" uid="2163609" user="CarlosMG">
     <nd ref="1360319687"/>

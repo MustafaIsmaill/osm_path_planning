@@ -101,11 +101,13 @@ class path_processing_planning:
 
 
 		self._origin=(self._starty,self._startx)
-		rospy.loginfo("start point from ROSbag: (UTMy,UTMx)")
-		rospy.loginfo(self._origin) 
+		origin_display=(self._startx,self._starty)
+		rospy.loginfo("start point from ROSbag: (UTMx,UTMy)")
+		rospy.loginfo(origin_display) 
 		self._destination=(self._endy,self._endx)
-		rospy.loginfo("Goal Point Entered: (UTMy,UTMx)")
-		rospy.loginfo(self._destination) # (434764 4464870)
+		destination_display=(self._endx,self._endy)
+		rospy.loginfo("Goal Point Entered: (UTMx,UTMy)")
+		rospy.loginfo(destination_display) # (434764 4464870)
 		self._origin_node = ox.get_nearest_node(self._graph_proj, self._origin, method='euclidean')
 		self._destination_node = ox.get_nearest_node(self._graph_proj, self._destination, method= 'euclidean')
 		self._route = nx.dijkstra_path(G= self._graph_proj, source= self._origin_node,
@@ -117,13 +119,11 @@ class path_processing_planning:
 			if ((self._edges.u[j] == self._route[0]) and 
 				(self._edges.v[j] == self._route[1])):
 				
-				print("first edge")
 				# print(self._edges.geometry[j])
 				self._first_edge_geom = self._edges.geometry[j]
 			elif((self._edges.u[j] == self._route[len(self._route)-2]) and 
 				(self._edges.v[j] == self._route[len(self._route)-1])):
 				
-				print("last edge")
 				# print(self._edges.geometry[j])
 				self._last_edge_geom = self._edges.geometry[j]
 		
@@ -139,13 +139,14 @@ class path_processing_planning:
 
 		self._projected_start_point= self._first_edge_geom.interpolate(
 			self._first_edge_geom.project(Point(self._startx, self._starty)))
-
-		print(self._projected_start_point)
+		rospy.loginfo("GPS start point projected to road:")
+		rospy.loginfo(self._projected_start_point)
 
 		self._projected_end_point=self._last_edge_geom.interpolate(
 			self._last_edge_geom.project(Point(self._endx, self._endy)))
 
-		print(self._projected_end_point)
+		rospy.loginfo("GPS goal point projected to road:")
+		rospy.loginfo(self._projected_end_point)
 
 		for i in range (0, len(self._route_pointx)):
 
@@ -205,10 +206,6 @@ class path_processing_planning:
 				self._old_UTMy=self._curr_UTMy
 				self.curr_gps_point=(self._curr_lat,self._curr_lon)
 				north, south, east, west= ox.bbox_from_point(self.curr_gps_point, distance=self.grid_map_size)
-				rospy.loginfo(north)
-				rospy.loginfo(south)
-				rospy.loginfo(east)
-				rospy.loginfo(west)
 				url_name = 'https://overpass-api.de/api/map?bbox=' + str(west) + "," + str (south) + "," + str(east) + "," + str(north)
 				print(url_name)
 
@@ -249,5 +246,4 @@ class path_processing_planning:
 		self.plan_path()
 		self.generate_path_points()
 		#self.plot_route_points()
-		rospy.loginfo("************Done**********")
 		return self._path
