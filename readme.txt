@@ -1,9 +1,12 @@
 road_processing_planning
 
 The package is used Construct paths in street networks from OpenStreetMaps using python and ROS. The package outputs the path waypoints whenever service is called
-on "/path_getter" topic as well successive subgraphs of vehicle's location for further processing. 
+on "/path_getter" topic as well as successive subgraphs of vehicle's location for further processing. 
+
 
 How it works:
+
+The package depends on osmnx python package, so users need to download it from https://github.com/gboeing/osmnx 
 
 "Configuration Stage"
 $ sh initial-config.sh
