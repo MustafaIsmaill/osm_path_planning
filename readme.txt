@@ -1,6 +1,7 @@
 road_processing_planning
 
-The package is used Construct paths in street networks from OpenStreetMaps using python and ROS. The package publishes the path waypoints for the vehicle and successive subgraphs.
+The package is used Construct paths in street networks from OpenStreetMaps using python and ROS. The package outputs the path waypoints whenever service is called
+on "/path_getter" topic as well successive subgraphs of vehicle's location for further processing. 
 
 How it works:
 
@@ -14,14 +15,15 @@ Run the following commands from the terminal:
 2. rosservice call /path_getter + (Goal UTMx, Goal UTMy) 
   example: rosservice call /path_getter 434764 4464870
 
-Note: The package has the maps of Leganes already downloaded and available offline, in case of changing the map, go to line 168 in road_processing_planning/scripts/path_points_processor and change the place_name.
+Note: The package has the maps of Leganes already downloaded and available offline, in case of changing the map, this can be easily done by changing place name variable from the 
+configuration file /road_processing_planning/config/document.yaml
 
 Note: Before changing place_name, make sure that the map desired is valid by going to https://nominatim.openstreetmap.org/ to check map validity.
 
 
 Package Inputs:
 
--Goal UTMx
+-Goal UTMx,UTMy
 
 Package Outputs:
 
