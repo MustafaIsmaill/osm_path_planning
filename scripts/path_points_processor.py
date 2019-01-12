@@ -116,21 +116,6 @@ class path_processing_planning:
 				
 				self._last_edge_geom = self._edges.geometry[j]
 
-	# def delete_duplicates(self,points):
-    	
-	# 	result = []
-	# 	seen = set()
-	# 	for value in points:
- #        # If value has not been encountered yet,
- #        # ... add it to both list and set.
-	# 		if value not in seen:
-	# 			result.append(value)
-	# 			seen.add(value)
-	# 		else:
-	# 			pass
-   		
- #   		return result
-	
 	def generate_path_points(self):
 		for r in range(0, len(self._route)-1):
 			
