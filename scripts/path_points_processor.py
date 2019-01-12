@@ -4,6 +4,7 @@ import rospy
 import osmnx as ox
 import networkx as nx
 import matplotlib.pyplot as plt
+from collections import OrderedDict
 
 from nav_msgs.msg import Path
 from geometry_msgs.msg import PoseStamped
@@ -43,29 +44,18 @@ class path_processing_planning:
 
 
 	
-	def get_start(self):
-
-		# rospy.Subscriber('/fix', NavSatFix, self.get_start)
-		
-		gps= rospy.wait_for_message('ada/fix', NavSatFix, timeout=None)
-		self._start_lon= gps.longitude
-		self._start_lat=gps.latitude
-		self.latlon_start= (self._start_lat, self._start_lon)
-		self._start_UTMx, self._start_UTMy, _, _ = utm.from_latlon(self._start_lat,self._start_lon )
-	def get_end(self, end_points):
-		
-		self._endx=end_points.x
-		self._endy=end_points.y
+	def get_start(self):	
+		gps = rospy.wait_for_message('ada/fix', NavSatFix, timeout=None)
+		self._start_lon, self._start_lat = gps.longitude, gps.latitude
+		self.latlon_start = (self._start_lat, self._start_lon)
+		self._start_UTMx, self._start_UTMy, _, _ = utm.from_latlon(self._start_lat, self._start_lon )
+	
+	def get_end(self, end_points):	
+		self._endx, self._endy = end_points.x, end_points.y
 		
 	def get_map(self, name):		
-		
-		
-		
-
-
-		file_path_map= self.file_path[:len (self.file_path) -7] + 'maps/'
-		
-		self.file_path_subgraph=self.file_path[:len (self.file_path) -7] + 'subgraphs/'
+		file_path_map = self.file_path[:len (self.file_path) -7] + 'maps/'
+		self.file_path_subgraph = self.file_path[:len (self.file_path) -7] + 'subgraphs/'
 
 		try: 
 			self._graph_proj= ox.load_graphml( name +'.xml', folder= file_path_map)
@@ -73,7 +63,6 @@ class path_processing_planning:
 		except:
 
 			try:
-
 				rospy.loginfo("First Downloading Attempt")
 				self._graph = ox.graph_from_place(name, network_type='drive')
 				self._graph_proj = ox.project_graph(self._graph)
@@ -83,13 +72,11 @@ class path_processing_planning:
 				self._graph = ox.graph_from_address(name, distance=250, network_type='drive')
 				self._graph_proj = ox.project_graph(self._graph)
 				ox.save_graphml(self._graph_proj ,folder= file_path_map ,  filename=name +'.xml')
+		
 		rospy.loginfo("Map Loaded Successfully")
-
-
 		self._nodes, self._edges = ox.graph_to_gdfs(self._graph_proj, nodes=True, edges=True)
 
 	def plan_path(self):
-
 		self._startx = self._start_UTMx
 		self._starty = self._start_UTMy
 
@@ -100,14 +87,18 @@ class path_processing_planning:
 		# self._endy = 4474037.16    //retiro park
 
 
-		self._origin=(self._starty,self._startx)
-		origin_display=(self._startx,self._starty)
+		self._origin=(self._starty, self._startx)
+		origin_display=(self._startx, self._starty)
+
 		rospy.loginfo("start point from ROSbag: (UTMx,UTMy)")
 		rospy.loginfo(origin_display) 
-		self._destination=(self._endy,self._endx)
+		
+		self._destination=(self._endy, self._endx)
 		destination_display=(self._endx,self._endy)
+		
 		rospy.loginfo("Goal Point Entered: (UTMx,UTMy)")
 		rospy.loginfo(destination_display) # (434764 4464870)
+		
 		self._origin_node = ox.get_nearest_node(self._graph_proj, self._origin, method='euclidean')
 		self._destination_node = ox.get_nearest_node(self._graph_proj, self._destination, method= 'euclidean')
 		self._route = nx.dijkstra_path(G= self._graph_proj, source= self._origin_node,
@@ -115,48 +106,44 @@ class path_processing_planning:
 		#ox.plot_graph_route(self._graph_proj, self._route,route_linewidth=6)
 
 		for j in range(0, len(self._edges)):
-			
 			if ((self._edges.u[j] == self._route[0]) and 
 				(self._edges.v[j] == self._route[1])):
-				
-				# print(self._edges.geometry[j])
+
 				self._first_edge_geom = self._edges.geometry[j]
-			elif((self._edges.u[j] == self._route[len(self._route)-2]) and 
+			
+			if((self._edges.u[j] == self._route[len(self._route)-2]) and 
 				(self._edges.v[j] == self._route[len(self._route)-1])):
 				
-				# print(self._edges.geometry[j])
 				self._last_edge_geom = self._edges.geometry[j]
 
-	def delete_duplicates(self,points):
+	# def delete_duplicates(self,points):
     	
-		result = []
-		seen = set()
-		for value in points:
-        # If value has not been encountered yet,
-        # ... add it to both list and set.
-			if value not in seen:
-				result.append(value)
-				seen.add(value)
-
-			else:
-				pass
+	# 	result = []
+	# 	seen = set()
+	# 	for value in points:
+ #        # If value has not been encountered yet,
+ #        # ... add it to both list and set.
+	# 		if value not in seen:
+	# 			result.append(value)
+	# 			seen.add(value)
+	# 		else:
+	# 			pass
    		
-   		return result
-
-
-		
+ #   		return result
+	
 	def generate_path_points(self):
-
 		for r in range(0, len(self._route)-1):
+			
 			for i in range(0, len(self._edges)-1):
+			
 				if (self._edges.u[i] == self._route[r]) and (self._edges.v[i] == self._route[r+1]):
+			
 					for g in range(0, len(self._edges.geometry[i].xy[0])):
 						self._route_pointx.append(self._edges.geometry[i].xy[0][g])
 						self._route_pointy.append(self._edges.geometry[i].xy[1][g])
 		
-		self._route_pointx=self.delete_duplicates(self._route_pointx)
-		self._route_pointy=self.delete_duplicates(self._route_pointy)
-
+		self._route_pointx = list(OrderedDict.fromkeys(self._route_pointx))
+		self._route_pointy = list(OrderedDict.fromkeys(self._route_pointy))
 
 		self._projected_start_point= self._first_edge_geom.interpolate(
 			self._first_edge_geom.project(Point(self._startx, self._starty)))
@@ -257,7 +244,7 @@ class path_processing_planning:
 		ax.plot(self._path.poses[len(self._path.poses)-1].pose.position.x,
 			self._path.poses[len(self._path.poses)-1].pose.position.y,'b+')
 
-		#plt.show()
+		# plt.show()
 		
 	def return_path(self, goal):
 		
