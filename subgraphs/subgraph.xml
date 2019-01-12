@@ -1,69 +1,152 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <osm version="0.6" generator="Overpass API 0.7.55.5 2ca3f387">
 <note>The data included in this document is from www.openstreetmap.org. The data is made available under ODbL.</note>
-<meta osm_base="2019-01-12T00:21:03Z"/>
+<meta osm_base="2019-01-12T12:41:03Z"/>
 
-  <bounds minlat="40.3101242" minlon="-3.7746845" maxlat="40.3110251" maxlon="-3.7735078"/>
+  <bounds minlat="40.3091855" minlon="-3.7717232" maxlat="40.3100864" maxlon="-3.7705465"/>
 
+  <node id="308217779" lat="40.3124031" lon="-3.7743962" version="17" timestamp="2014-06-15T10:42:41Z" changeset="22941222" uid="42055" user="polkillas"/>
+  <node id="308217780" lat="40.3142740" lon="-3.7666751" version="10" timestamp="2014-06-15T10:42:41Z" changeset="22941222" uid="42055" user="polkillas"/>
+  <node id="308217781" lat="40.3183150" lon="-3.7584378" version="10" timestamp="2014-06-15T10:42:41Z" changeset="22941222" uid="42055" user="polkillas"/>
+  <node id="308217785" lat="40.3156380" lon="-3.7588162" version="9" timestamp="2014-06-15T10:17:58Z" changeset="22941222" uid="42055" user="polkillas"/>
+  <node id="308217786" lat="40.3122415" lon="-3.7658058" version="9" timestamp="2014-06-15T10:17:58Z" changeset="22941222" uid="42055" user="polkillas"/>
+  <node id="308217787" lat="40.3086608" lon="-3.7761211" version="9" timestamp="2013-12-29T15:09:57Z" changeset="19697881" uid="777223" user="Serfuen"/>
+  <node id="315060127" lat="40.3093984" lon="-3.7716348" version="14" timestamp="2011-07-13T12:45:02Z" changeset="8712309" uid="220932" user="mor"/>
+  <node id="315060128" lat="40.3097023" lon="-3.7709747" version="18" timestamp="2011-07-13T12:45:02Z" changeset="8712309" uid="220932" user="mor"/>
+  <node id="315060129" lat="40.3099972" lon="-3.7703378" version="14" timestamp="2011-07-13T12:45:20Z" changeset="8712309" uid="220932" user="mor"/>
   <node id="338641196" lat="40.3088075" lon="-3.7737377" version="9" timestamp="2011-07-13T12:44:47Z" changeset="8712309" uid="220932" user="mor"/>
   <node id="338641198" lat="40.3089322" lon="-3.7729982" version="9" timestamp="2011-07-13T12:45:47Z" changeset="8712309" uid="220932" user="mor"/>
-  <node id="364070575" lat="40.3093882" lon="-3.7777893" version="6" timestamp="2015-02-12T18:07:36Z" changeset="28801440" uid="2163609" user="CarlosMG"/>
-  <node id="364070578" lat="40.3119538" lon="-3.7700299" version="3" timestamp="2016-05-15T01:09:47Z" changeset="39322916" uid="3649461" user="Cuenqui"/>
-  <node id="1360319044" lat="40.3102150" lon="-3.7752418" version="1" timestamp="2011-07-13T12:43:35Z" changeset="8712309" uid="220932" user="mor"/>
-  <node id="1360319048" lat="40.3115596" lon="-3.7712093" version="1" timestamp="2011-07-13T12:43:35Z" changeset="8712309" uid="220932" user="mor"/>
-  <node id="1360319302" lat="40.3104105" lon="-3.7746556" version="1" timestamp="2011-07-13T12:43:40Z" changeset="8712309" uid="220932" user="mor"/>
-  <node id="1360319358" lat="40.3117886" lon="-3.7705225" version="1" timestamp="2011-07-13T12:43:42Z" changeset="8712309" uid="220932" user="mor"/>
-  <node id="1360319373" lat="40.3138571" lon="-3.7649501" version="1" timestamp="2011-07-13T12:43:42Z" changeset="8712309" uid="220932" user="mor"/>
-  <node id="1360319486" lat="40.3108661" lon="-3.7732892" version="1" timestamp="2011-07-13T12:43:47Z" changeset="8712309" uid="220932" user="mor"/>
-  <node id="1360319551" lat="40.3121993" lon="-3.7756586" version="2" timestamp="2016-12-16T15:36:46Z" changeset="44450579" uid="3649461" user="Cuenqui"/>
-  <node id="1360319617" lat="40.3123629" lon="-3.7749389" version="2" timestamp="2016-10-17T13:55:17Z" changeset="42960417" uid="3649461" user="Cuenqui"/>
+  <node id="338641344" lat="40.3087117" lon="-3.7763920" version="3" timestamp="2014-12-14T15:31:44Z" changeset="27460766" uid="777223" user="Serfuen"/>
+  <node id="356281101" lat="40.3098607" lon="-3.7708155" version="3" timestamp="2014-06-15T10:17:58Z" changeset="22941222" uid="42055" user="polkillas"/>
+  <node id="356281102" lat="40.3088825" lon="-3.7737787" version="2" timestamp="2013-12-29T15:09:58Z" changeset="19697881" uid="777223" user="Serfuen"/>
+  <node id="1360319182" lat="40.3127075" lon="-3.7734968" version="1" timestamp="2011-07-13T12:43:38Z" changeset="8712309" uid="220932" user="mor"/>
+  <node id="1360319608" lat="40.3103072" lon="-3.7696619" version="1" timestamp="2011-07-13T12:43:51Z" changeset="8712309" uid="220932" user="mor"/>
+  <node id="1360319687" lat="40.3104510" lon="-3.7693645" version="2" timestamp="2015-02-12T18:07:37Z" changeset="28801440" uid="2163609" user="CarlosMG"/>
+  <node id="1360319714" lat="40.3128753" lon="-3.7727846" version="1" timestamp="2011-07-13T12:43:53Z" changeset="8712309" uid="220932" user="mor"/>
+  <node id="1360319780" lat="40.3091421" lon="-3.7722825" version="1" timestamp="2011-07-13T12:43:56Z" changeset="8712309" uid="220932" user="mor"/>
   <node id="1360319845" lat="40.3111040" lon="-3.7725756" version="1" timestamp="2011-07-13T12:43:58Z" changeset="8712309" uid="220932" user="mor"/>
-  <node id="1360319911" lat="40.3106399" lon="-3.7739674" version="1" timestamp="2011-07-13T12:44:01Z" changeset="8712309" uid="220932" user="mor"/>
+  <node id="1360319946" lat="40.3087742" lon="-3.7744828" version="2" timestamp="2015-02-12T18:07:36Z" changeset="28801440" uid="2163609" user="CarlosMG"/>
   <node id="1360319963" lat="40.3113277" lon="-3.7719047" version="1" timestamp="2011-07-13T12:44:03Z" changeset="8712309" uid="220932" user="mor"/>
-  <way id="121534525" version="3" timestamp="2016-07-27T12:51:13Z" changeset="41062128" uid="99570" user="avm">
-    <nd ref="1360319551"/>
-    <nd ref="1360319302"/>
-    <nd ref="338641196"/>
-    <tag k="highway" v="living_street"/>
-    <tag k="maxspeed" v="20"/>
-    <tag k="name" v="Calle Ángel Nieto"/>
-  </way>
-  <way id="121534539" version="3" timestamp="2016-07-27T12:51:13Z" changeset="41062128" uid="99570" user="avm">
-    <nd ref="338641198"/>
-    <nd ref="1360319911"/>
-    <nd ref="1360319617"/>
-    <tag k="highway" v="living_street"/>
-    <tag k="maxspeed" v="20"/>
-    <tag k="name" v="Calle Pedro Martínez de la Rosa"/>
-  </way>
-  <way id="254161898" version="2" timestamp="2016-07-27T12:51:12Z" changeset="41062128" uid="99570" user="avm">
-    <nd ref="1360319373"/>
-    <nd ref="364070578"/>
-    <nd ref="1360319358"/>
-    <nd ref="1360319048"/>
+  <node id="1427820168" lat="40.3100833" lon="-3.7780230" version="2" timestamp="2014-12-14T15:31:44Z" changeset="27460766" uid="777223" user="Serfuen"/>
+  <node id="1427820176" lat="40.3104747" lon="-3.7779417" version="2" timestamp="2014-12-14T15:31:44Z" changeset="27460766" uid="777223" user="Serfuen"/>
+  <node id="1427820189" lat="40.3120321" lon="-3.7762233" version="1" timestamp="2011-09-09T09:39:45Z" changeset="9252722" uid="33103" user="sergionaranja"/>
+  <node id="2599740849" lat="40.3087910" lon="-3.7740708" version="1" timestamp="2013-12-29T15:09:50Z" changeset="19697881" uid="777223" user="Serfuen"/>
+  <node id="2599740855" lat="40.3092388" lon="-3.7721685" version="1" timestamp="2013-12-29T15:09:50Z" changeset="19697881" uid="777223" user="Serfuen"/>
+  <node id="2917178483" lat="40.3128898" lon="-3.7644357" version="1" timestamp="2014-06-15T10:17:54Z" changeset="22941222" uid="42055" user="polkillas"/>
+  <node id="2917178498" lat="40.3149546" lon="-3.7601460" version="1" timestamp="2014-06-15T10:17:54Z" changeset="22941222" uid="42055" user="polkillas"/>
+  <node id="2917178708" lat="40.3130942" lon="-3.7640174" version="1" timestamp="2014-06-15T10:17:54Z" changeset="22941222" uid="42055" user="polkillas"/>
+  <node id="2917178722" lat="40.3130822" lon="-3.7642878" version="1" timestamp="2014-06-15T10:17:55Z" changeset="22941222" uid="42055" user="polkillas"/>
+  <node id="2917178742" lat="40.3149758" lon="-3.7604218" version="1" timestamp="2014-06-15T10:17:55Z" changeset="22941222" uid="42055" user="polkillas"/>
+  <node id="2917178818" lat="40.3147546" lon="-3.7606460" version="1" timestamp="2014-06-15T10:17:57Z" changeset="22941222" uid="42055" user="polkillas"/>
+  <node id="2917197969" lat="40.3138789" lon="-3.7646366" version="1" timestamp="2014-06-15T10:42:37Z" changeset="22941222" uid="42055" user="polkillas"/>
+  <node id="2917197980" lat="40.3154109" lon="-3.7639288" version="1" timestamp="2014-06-15T10:42:37Z" changeset="22941222" uid="42055" user="polkillas"/>
+  <node id="2917197982" lat="40.3174381" lon="-3.7599256" version="1" timestamp="2014-06-15T10:42:37Z" changeset="22941222" uid="42055" user="polkillas"/>
+  <node id="2917197997" lat="40.3149403" lon="-3.7627953" version="1" timestamp="2014-06-15T10:42:38Z" changeset="22941222" uid="42055" user="polkillas"/>
+  <node id="2917197998" lat="40.3146583" lon="-3.7657066" version="1" timestamp="2014-06-15T10:42:38Z" changeset="22941222" uid="42055" user="polkillas"/>
+  <node id="2917197999" lat="40.3139282" lon="-3.7678855" version="1" timestamp="2014-06-15T10:42:38Z" changeset="22941222" uid="42055" user="polkillas"/>
+  <node id="2917205102" lat="40.3143110" lon="-3.7623227" version="1" timestamp="2014-06-15T10:42:38Z" changeset="22941222" uid="42055" user="polkillas"/>
+  <node id="2917205113" lat="40.3137015" lon="-3.7649966" version="1" timestamp="2014-06-15T10:42:38Z" changeset="22941222" uid="42055" user="polkillas"/>
+  <node id="2917205123" lat="40.3162620" lon="-3.7620463" version="1" timestamp="2014-06-15T10:42:38Z" changeset="22941222" uid="42055" user="polkillas"/>
+  <node id="2917205133" lat="40.3163032" lon="-3.7572358" version="2" timestamp="2016-06-16T14:25:10Z" changeset="40067966" uid="3649461" user="Cuenqui"/>
+  <node id="2917205142" lat="40.3147586" lon="-3.7632042" version="1" timestamp="2014-06-15T10:42:39Z" changeset="22941222" uid="42055" user="polkillas"/>
+  <node id="2917205144" lat="40.3172348" lon="-3.7601673" version="1" timestamp="2014-06-15T10:42:39Z" changeset="22941222" uid="42055" user="polkillas"/>
+  <node id="2917205145" lat="40.3146294" lon="-3.7630312" version="1" timestamp="2014-06-15T10:42:39Z" changeset="22941222" uid="42055" user="polkillas"/>
+  <node id="2917205148" lat="40.3145540" lon="-3.7660899" version="1" timestamp="2014-06-15T10:42:39Z" changeset="22941222" uid="42055" user="polkillas"/>
+  <node id="2917205152" lat="40.3151100" lon="-3.7634995" version="1" timestamp="2014-06-15T10:42:39Z" changeset="22941222" uid="42055" user="polkillas"/>
+  <node id="2917205154" lat="40.3141839" lon="-3.7626680" version="1" timestamp="2014-06-15T10:42:39Z" changeset="22941222" uid="42055" user="polkillas"/>
+  <node id="2917205161" lat="40.3150388" lon="-3.7636443" version="1" timestamp="2014-06-15T10:42:39Z" changeset="22941222" uid="42055" user="polkillas"/>
+  <node id="3234490021" lat="40.3097927" lon="-3.7777791" version="1" timestamp="2014-12-14T15:31:26Z" changeset="27460766" uid="777223" user="Serfuen"/>
+  <node id="3234490022" lat="40.3110055" lon="-3.7774640" version="1" timestamp="2014-12-14T15:31:26Z" changeset="27460766" uid="777223" user="Serfuen"/>
+  <node id="4248351414" lat="40.3159839" lon="-3.7580850" version="1" timestamp="2016-06-17T12:45:12Z" changeset="40093116" uid="3649461" user="Cuenqui"/>
+  <node id="4248351415" lat="40.3161752" lon="-3.7576282" version="1" timestamp="2016-06-17T12:45:12Z" changeset="40093116" uid="3649461" user="Cuenqui"/>
+  <node id="4451927710" lat="40.3121481" lon="-3.7755216" version="1" timestamp="2016-10-17T13:55:17Z" changeset="42960417" uid="3649461" user="Cuenqui"/>
+  <node id="4557266047" lat="40.3097493" lon="-3.7710006" version="1" timestamp="2016-12-16T14:37:48Z" changeset="44449138" uid="3649461" user="Cuenqui">
+    <tag k="highway" v="give_way"/>
+  </node>
+  <node id="4557266048" lat="40.3112621" lon="-3.7718655" version="1" timestamp="2016-12-16T14:37:48Z" changeset="44449138" uid="3649461" user="Cuenqui">
+    <tag k="highway" v="give_way"/>
+  </node>
+  <node id="4557266049" lat="40.3113925" lon="-3.7719435" version="1" timestamp="2016-12-16T14:37:48Z" changeset="44449138" uid="3649461" user="Cuenqui">
+    <tag k="highway" v="give_way"/>
+  </node>
+  <way id="121534639" version="4" timestamp="2016-12-16T14:37:48Z" changeset="44449138" uid="3649461" user="Cuenqui">
+    <nd ref="315060128"/>
+    <nd ref="4557266047"/>
+    <nd ref="4557266048"/>
     <nd ref="1360319963"/>
-    <nd ref="1360319845"/>
-    <nd ref="1360319486"/>
-    <nd ref="1360319911"/>
-    <nd ref="1360319302"/>
-    <nd ref="1360319044"/>
-    <nd ref="364070575"/>
-    <tag k="highway" v="residential"/>
-    <tag k="name" v="Calle Fernando Alonso"/>
+    <nd ref="4557266049"/>
+    <nd ref="1360319714"/>
+    <tag k="highway" v="living_street"/>
+    <tag k="maxspeed" v="20"/>
+    <tag k="name" v="Calle Jordi Tarrés"/>
   </way>
-  <relation id="6217202" version="1" timestamp="2016-05-15T01:09:47Z" changeset="39322916" uid="3649461" user="Cuenqui">
-    <member type="way" ref="32340720" role="from"/>
-    <member type="node" ref="364070578" role="via"/>
-    <member type="way" ref="32340720" role="to"/>
-    <tag k="restriction" v="no_u_turn"/>
-    <tag k="type" v="restriction"/>
-  </relation>
-  <relation id="6217203" version="1" timestamp="2016-05-15T01:09:47Z" changeset="39322916" uid="3649461" user="Cuenqui">
-    <member type="way" ref="418198634" role="from"/>
-    <member type="node" ref="364070578" role="via"/>
-    <member type="way" ref="418198634" role="to"/>
-    <tag k="restriction" v="no_u_turn"/>
-    <tag k="type" v="restriction"/>
-  </relation>
+  <way id="121534654" version="3" timestamp="2016-07-27T12:51:13Z" changeset="41062128" uid="99570" user="avm">
+    <nd ref="1360319182"/>
+    <nd ref="1360319845"/>
+    <nd ref="315060127"/>
+    <tag k="highway" v="living_street"/>
+    <tag k="maxspeed" v="20"/>
+    <tag k="name" v="Calle Luis Moya"/>
+  </way>
+  <way id="254161900" version="2" timestamp="2015-02-12T18:07:57Z" changeset="28801440" uid="2163609" user="CarlosMG">
+    <nd ref="1360319687"/>
+    <nd ref="1360319608"/>
+    <nd ref="315060129"/>
+    <nd ref="315060128"/>
+    <nd ref="315060127"/>
+    <nd ref="1360319780"/>
+    <nd ref="338641198"/>
+    <nd ref="338641196"/>
+    <nd ref="2599740849"/>
+    <nd ref="1360319946"/>
+    <tag k="highway" v="tertiary"/>
+    <tag k="name" v="Calle Ricardo Tormo"/>
+    <tag k="oneway" v="yes"/>
+  </way>
+  <way id="288171834" version="4" timestamp="2016-10-17T13:55:18Z" changeset="42960417" uid="3649461" user="Cuenqui">
+    <nd ref="308217779"/>
+    <nd ref="2917197999"/>
+    <nd ref="308217780"/>
+    <nd ref="2917205148"/>
+    <nd ref="2917197998"/>
+    <nd ref="2917205113"/>
+    <nd ref="2917197969"/>
+    <nd ref="2917205145"/>
+    <nd ref="2917205154"/>
+    <nd ref="2917205102"/>
+    <nd ref="2917197997"/>
+    <nd ref="2917205142"/>
+    <nd ref="2917205152"/>
+    <nd ref="2917205161"/>
+    <nd ref="2917197980"/>
+    <nd ref="2917205123"/>
+    <nd ref="2917205144"/>
+    <nd ref="2917197982"/>
+    <nd ref="308217781"/>
+    <nd ref="2917205133"/>
+    <nd ref="4248351415"/>
+    <nd ref="4248351414"/>
+    <nd ref="308217785"/>
+    <nd ref="2917178498"/>
+    <nd ref="2917178742"/>
+    <nd ref="2917178818"/>
+    <nd ref="2917178708"/>
+    <nd ref="2917178722"/>
+    <nd ref="2917178483"/>
+    <nd ref="308217786"/>
+    <nd ref="356281101"/>
+    <nd ref="2599740855"/>
+    <nd ref="356281102"/>
+    <nd ref="308217787"/>
+    <nd ref="338641344"/>
+    <nd ref="3234490021"/>
+    <nd ref="1427820168"/>
+    <nd ref="1427820176"/>
+    <nd ref="3234490022"/>
+    <nd ref="1427820189"/>
+    <nd ref="4451927710"/>
+    <nd ref="308217779"/>
+    <tag k="landuse" v="greenfield"/>
+  </way>
 
 </osm>

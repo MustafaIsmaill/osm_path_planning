@@ -126,16 +126,37 @@ class path_processing_planning:
 				
 				# print(self._edges.geometry[j])
 				self._last_edge_geom = self._edges.geometry[j]
+
+	def delete_duplicates(self,points):
+    	
+		result = []
+		seen = set()
+		for value in points:
+        # If value has not been encountered yet,
+        # ... add it to both list and set.
+			if value not in seen:
+				result.append(value)
+				seen.add(value)
+
+			else:
+				pass
+   		
+   		return result
+
+
 		
 	def generate_path_points(self):
 
 		for r in range(0, len(self._route)-1):
-			for i in range(0, len(self._edges)):
+			for i in range(0, len(self._edges)-1):
 				if (self._edges.u[i] == self._route[r]) and (self._edges.v[i] == self._route[r+1]):
 					for g in range(0, len(self._edges.geometry[i].xy[0])):
 						self._route_pointx.append(self._edges.geometry[i].xy[0][g])
 						self._route_pointy.append(self._edges.geometry[i].xy[1][g])
 		
+		self._route_pointx=self.delete_duplicates(self._route_pointx)
+		self._route_pointy=self.delete_duplicates(self._route_pointy)
+
 
 		self._projected_start_point= self._first_edge_geom.interpolate(
 			self._first_edge_geom.project(Point(self._startx, self._starty)))

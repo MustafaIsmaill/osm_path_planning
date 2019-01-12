@@ -1,0 +1,16 @@
+def remove_duplicates(values):
+    output = []
+    seen = set()
+    for value in values:
+        # If value has not been encountered yet,
+        # ... add it to both list and set.
+        if value not in seen:
+            output.append(value)
+            seen.add(value)
+            print(value)
+    return output
+
+# Remove duplicates from this list.
+values =[434171.890876, 434125.687197, 434125.687197, 434175.688452, 434175.688452, 434234.389547, 434234.389547, 434292.237418, 434292.237418, 434353.104255, 434353.104255, 434410.328621, 434410.328621, 434469.642345, 434469.642345, 434528.222109, 434528.222109, 434570.238497]
+result = remove_duplicates(values)
+print(result)
