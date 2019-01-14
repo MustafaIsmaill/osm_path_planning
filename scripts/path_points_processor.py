@@ -4,14 +4,14 @@ import rospy
 import osmnx as ox
 import networkx as nx
 import matplotlib.pyplot as plt
-from collections import OrderedDict
+from collections import OrderedDict	
 
 from nav_msgs.msg import Path
 from geometry_msgs.msg import PoseStamped
 from sensor_msgs.msg import NavSatFix
 from shapely.geometry import Point
+from shapely.geometry import box
 import urllib
-import yaml
 
 import time
 import math
@@ -35,8 +35,15 @@ class path_processing_planning:
 		self._path = Path()
 		self._path.header.stamp = rospy.Time.now()
 		self.file_path= os.path.dirname(os.path.abspath(__file__))
+		self.file_path_map = self.file_path[:len (self.file_path) -7] + 'maps/'
+		self.file_path_subgraph = self.file_path[:len (self.file_path) -7] + 'subgraphs/'
 
-	
+		self.map_load_range = rospy.get_param("grid_map_size")/2
+
+		self.url_base = 'https://overpass-api.de/api/map?bbox='
+
+		self.first_time_flag = 1
+
 	def get_start(self):
 		rospy.loginfo("waiting for start point")
 		gps = rospy.wait_for_message('ada/fix', NavSatFix, timeout=None)
@@ -52,11 +59,8 @@ class path_processing_planning:
 		# self._endx, self._endy = end_points.x, end_points.y
 		
 	def get_map(self, name):		
-		file_path_map = self.file_path[:len (self.file_path) -7] + 'maps/'
-		self.file_path_subgraph = self.file_path[:len (self.file_path) -7] + 'subgraphs/'
-
 		try: 
-			self._graph_proj= ox.load_graphml( name +'.xml', folder= file_path_map)
+			self._graph_proj= ox.load_graphml( name +'.xml', folder= self.file_path_map)
 					
 		except:
 
@@ -168,12 +172,9 @@ class path_processing_planning:
 
 	def draw_subgraph(self,curr_gps):
 
-		
-		
 		self.curr=curr_gps
 
 		rospy.loginfo("******************")
-		# rospy.loginfo(self._path)
 		self.route_pub.publish(self._path)
 
 		self._curr_lat=self.curr.latitude
@@ -184,12 +185,29 @@ class path_processing_planning:
 
 	
 
-			xdiff =self._curr_UTMx - self._old_UTMx
-			ydiff=self._curr_UTMy - self._old_UTMy
+			# xdiff =self._curr_UTMx - self._old_UTMx
+			# ydiff=self._curr_UTMy - self._old_UTMy
+
+			dist = self.calc_distance((self._curr_UTMx, self._curr_UTMy), (self._old_UTMx, self._old_UTMy))
 		
-			rospy.loginfo("Distance in x directon: " + str (abs(xdiff)))
-			rospy.loginfo("Distance in y directon: " + str (abs(ydiff)))
-			if (abs(xdiff) > 25 or abs(ydiff) > 25):
+			rospy.loginfo("Distance travelled: %f" %dist)
+
+			if self.first_time_flag == 1:
+				rospy.loginfo("Generating subgraph")
+				self._curr_point=(self._curr_UTMy, self._curr_UTMx)
+				self._curr_node = ox.get_nearest_node(self._graph_proj, self._curr_point, method='euclidean')
+				self._old_UTMx=self._curr_UTMx
+				self._old_UTMy=self._curr_UTMy
+				self.curr_gps_point=(self._curr_lat,self._curr_lon)
+				north, south, east, west= ox.bbox_from_point(self.curr_gps_point, distance=rospy.get_param("grid_map_size"))
+				url_name = self.url_base + str(west) + "," + str (south) + "," + str(east) + "," + str(north)
+				rospy.loginfo("downloading ...")
+
+				urllib.urlretrieve(url_name, self.file_path_subgraph + 'subgraph.xml')
+
+				self.first_time_flag = 0
+
+			if dist > self.map_load_range:
 				
 				rospy.loginfo("Generating subgraph")
 				self._curr_point=(self._curr_UTMy, self._curr_UTMx)
@@ -198,16 +216,15 @@ class path_processing_planning:
 				self._old_UTMy=self._curr_UTMy
 				self.curr_gps_point=(self._curr_lat,self._curr_lon)
 				north, south, east, west= ox.bbox_from_point(self.curr_gps_point, distance=rospy.get_param("grid_map_size"))
-				url_name = 'https://overpass-api.de/api/map?bbox=' + str(west) + "," + str (south) + "," + str(east) + "," + str(north)
+				url_name = self.url_base + str(west) + "," + str (south) + "," + str(east) + "," + str(north)
 				rospy.loginfo("downloading ...")
 
 				urllib.urlretrieve(url_name, self.file_path_subgraph + 'subgraph.xml')
 
-			
 			else:
-				rospy.loginfo("distance is less than 25 meters")
+				rospy.loginfo("distance is less than %f meters" %self.map_load_range)
 		else:
-			rospy.loginfo("nan signal")
+			rospy.loginfo("gps value is not a number ...")
 
 	def plot_route_points(self):
 		fig, ax = plt.subplots()
@@ -230,9 +247,13 @@ class path_processing_planning:
 
 		# plt.show()
 		
+	def calc_distance(self, point1, point2):
+		x1, y1 = point1[0], point1[1]
+		x2, y2 = point2[0], point2[1]
+
+		return math.sqrt((x1-x2)**2 + (y1-y2)**2)
+
 	def return_path(self):
-		
-		
 		self.get_map(rospy.get_param("place_name"))
 		self.get_end()
 		self.get_start()
