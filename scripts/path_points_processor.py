@@ -22,10 +22,10 @@ class path_processing_planning:
 
 	def __init__(self):
 		
-		# rospy.init_node('road_processor_planner', anonymous=True)
+		rospy.init_node('road_processor_planner', anonymous=True)
 
-		# self.route_pub = rospy.Publisher("route_points", Path)
-		# self._rate = rospy.Rate(1)
+		self.route_pub = rospy.Publisher("route_points", Path)
+		self._rate = rospy.Rate(1)
 		
 		self._route_pointx = []
 		self._route_pointy = []
@@ -176,6 +176,8 @@ class path_processing_planning:
 
 		rospy.loginfo("******************")
 
+		rospy.loginfo(self._path)
+		self.route_pub.publish(self._path)
 
 		self._curr_lat=self.curr.latitude
 		self._curr_lon=self.curr.longitude
@@ -199,7 +201,7 @@ class path_processing_planning:
 				self._old_UTMy=self._curr_UTMy
 				self.curr_gps_point=(self._curr_lat,self._curr_lon)
 				north, south, east, west= ox.bbox_from_point(self.curr_gps_point, distance=self.grid_map_size)
-				url_name = 'https://overpass-api.de/api/map?bbox=' + str(west) + "," + str (south) + "," + str(east) + "," + str(north)
+				url_name = 'https://api.openstreetmap.org/api/0.6/map?bbox=' + str(west) + "," + str (south) + "," + str(east) + "," + str(north)
 				print(url_name)
 
 				urllib.urlretrieve(url_name, self.file_path_subgraph + 'subgraph.xml')
