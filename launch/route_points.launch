@@ -1,5 +1,6 @@
 <launch>
-
+  <rosparam command = "load" file="$(find road_processing_planning)/config/document.yaml"/>
   <node pkg="road_processing_planning" type="main.py" name="road_processor_planner" output="screen"/>
+
 
 </launch>

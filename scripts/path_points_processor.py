@@ -24,7 +24,7 @@ class path_processing_planning:
 		
 		rospy.init_node('road_processor_planner', anonymous=True)
 
-		self.route_pub = rospy.Publisher("route_points", Path)
+		self.route_pub = rospy.Publisher("route_points", Path, queue_size=1)
 		self._rate = rospy.Rate(1)
 		
 		self._route_pointx = []
@@ -35,23 +35,21 @@ class path_processing_planning:
 		self._path = Path()
 		self._path.header.stamp = rospy.Time.now()
 		self.file_path= os.path.dirname(os.path.abspath(__file__))
-		document = open(self.file_path[:len (self.file_path) -7] + 'config/document.yaml', 'r')
-		parsed = yaml.load(document)
-		self.place_name= parsed['place_name']
-		self.grid_map_size= parsed['grid_map_size']
-
-		# rospy.spin()
-
 
 	
-	def get_start(self):	
+	def get_start(self):
+		rospy.loginfo("waiting for start point")
 		gps = rospy.wait_for_message('ada/fix', NavSatFix, timeout=None)
 		self._start_lon, self._start_lat = gps.longitude, gps.latitude
 		self.latlon_start = (self._start_lat, self._start_lon)
 		self._start_UTMx, self._start_UTMy, _, _ = utm.from_latlon(self._start_lat, self._start_lon )
 	
-	def get_end(self, end_points):	
-		self._endx, self._endy = end_points.x, end_points.y
+	def get_end(self):
+		rospy.loginfo("waiting for goal point")
+		self.goal_points= rospy.wait_for_message('/move_base_simple/goal', PoseStamped, timeout=None)
+		self._endx= self.goal_points.pose.position.x
+		self._endy= self.goal_points.pose.position.y
+		# self._endx, self._endy = end_points.x, end_points.y
 		
 	def get_map(self, name):		
 		file_path_map = self.file_path[:len (self.file_path) -7] + 'maps/'
@@ -175,7 +173,6 @@ class path_processing_planning:
 		self.curr=curr_gps
 
 		rospy.loginfo("******************")
-
 		rospy.loginfo(self._path)
 		self.route_pub.publish(self._path)
 
@@ -201,7 +198,7 @@ class path_processing_planning:
 				self._old_UTMy=self._curr_UTMy
 				self.curr_gps_point=(self._curr_lat,self._curr_lon)
 				north, south, east, west= ox.bbox_from_point(self.curr_gps_point, distance=self.grid_map_size)
-				url_name = 'https://api.openstreetmap.org/api/0.6/map?bbox=' + str(west) + "," + str (south) + "," + str(east) + "," + str(north)
+				url_name = 'https://overpass-api.de/api/map?bbox=' + str(west) + "," + str (south) + "," + str(east) + "," + str(north)
 				print(url_name)
 
 				urllib.urlretrieve(url_name, self.file_path_subgraph + 'subgraph.xml')
@@ -233,11 +230,12 @@ class path_processing_planning:
 
 		# plt.show()
 		
-	def return_path(self, goal):
+	def return_path(self):
 		
-		self.get_map(self.place_name)
+		
+		self.get_map(rospy.get_param("place_name"))
+		self.get_end()
 		self.get_start()
-		self.get_end(goal)
 		self.plan_path()
 		self.generate_path_points()
 		#self.plot_route_points()

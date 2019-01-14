@@ -15,25 +15,16 @@ from path_points_processor import *
 
 
 
-def service_callback(goal):
-
-
-	path = path_processing_planning()
-	return path.return_path(goal)
-
-
 if __name__ == '__main__':
 	try:
 		
 		rospy.init_node('road_processor_planner', anonymous=True)
+		path = path_processing_planning()
+		path.return_path()
 
-		path_getter_srv = rospy.Service('path_getter', getPath, service_callback)
+		# path.get_map(rospy.get_param("place_name"))
 
 		rospy.spin()
 
 	except Exception as e:
 		print(e)
-
-
-#'Universidad Carlos III de Madrid, 30, Avenida de la Universidad'
-#string place_name
