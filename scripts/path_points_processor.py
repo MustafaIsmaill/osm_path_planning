@@ -173,7 +173,7 @@ class path_processing_planning:
 		self.curr=curr_gps
 
 		rospy.loginfo("******************")
-		rospy.loginfo(self._path)
+		# rospy.loginfo(self._path)
 		self.route_pub.publish(self._path)
 
 		self._curr_lat=self.curr.latitude
@@ -197,9 +197,9 @@ class path_processing_planning:
 				self._old_UTMx=self._curr_UTMx
 				self._old_UTMy=self._curr_UTMy
 				self.curr_gps_point=(self._curr_lat,self._curr_lon)
-				north, south, east, west= ox.bbox_from_point(self.curr_gps_point, distance=self.grid_map_size)
+				north, south, east, west= ox.bbox_from_point(self.curr_gps_point, distance=rospy.get_param("grid_map_size"))
 				url_name = 'https://overpass-api.de/api/map?bbox=' + str(west) + "," + str (south) + "," + str(east) + "," + str(north)
-				print(url_name)
+				rospy.loginfo("downloading ...")
 
 				urllib.urlretrieve(url_name, self.file_path_subgraph + 'subgraph.xml')
 
