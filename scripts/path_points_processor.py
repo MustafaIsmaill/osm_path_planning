@@ -40,7 +40,8 @@ class path_processing_planning:
 
 		self.map_load_range = rospy.get_param("grid_map_size")/2
 
-		self.url_base = 'https://overpass-api.de/api/map?bbox='
+		self.url_base1 = 'https://overpass-api.de/api/map?bbox='
+		self.url_base= 'https://www.openstreetmap.org/api/0.6/map?bbox='
 
 		self.first_time_flag = 1
 
@@ -216,7 +217,7 @@ class path_processing_planning:
 				self._old_UTMy=self._curr_UTMy
 				self.curr_gps_point=(self._curr_lat,self._curr_lon)
 				north, south, east, west= ox.bbox_from_point(self.curr_gps_point, distance=rospy.get_param("grid_map_size"))
-				url_name = self.url_base + str(west) + "," + str (south) + "," + str(east) + "," + str(north)
+				url_name = self.url_base + str(west) + "%2C" + str (south) + "%2C" + str(east) + "%2C" + str(north)
 				rospy.loginfo("downloading ...")
 
 				urllib.urlretrieve(url_name, self.file_path_subgraph + 'subgraph.xml')
