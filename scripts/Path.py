@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 
-from main import *
 
 import rospy
 from nav_msgs.msg import Path
