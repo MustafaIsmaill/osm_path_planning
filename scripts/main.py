@@ -1,31 +1,33 @@
 #!/usr/bin/env python
 
 import rospy
-import osmnx as ox
-import networkx as nx
+from map_processor import *
+from Path import *
+from Subgraph import *
 
-from nav_msgs.msg import Path
-from geometry_msgs.msg import PoseStamped
-
-from road_processing_planning.srv import *
-import time
-
-from path_points_processor import *
-
-
-
+def gps_callback(gps_msg):
+	sub_graph.draw_subgraph(gps_msg)
+	osm_path.publish_path()
 
 if __name__ == '__main__':
 	try:
-		
-		rospy.init_node('road_processor_planner', anonymous=True)
-		path = path_processing_planning()
-		path.return_path()
 
-		# path.get_map(rospy.get_param("place_name"))
+		rospy.init_node('road_processor_planner', anonymous=True)
+
+		osm_map = map_processing()		
+		current_map = osm_map.get_map(rospy.get_param("place_name"))
+		edges = osm_map.get_edges()
+		
+		osm_path = path_generator(current_map, edges)
+		start_x, start_y = osm_path.get_start_and_end()
+		osm_path.plan_path()
+		osm_path.generate_path_points()
+		
+		sub_graph = subgraph(start_x, start_y)
+
+		sub = rospy.Subscriber('ada/fix', NavSatFix, gps_callback)
 
 		rospy.spin()
-
 
 	except Exception as e:
 		print(e)
