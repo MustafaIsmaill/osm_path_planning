@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 
-from main import *
 
 import os
 import osmnx as ox 
+import rospy
 
 
 class map_processing:

@@ -1,11 +1,12 @@
 #!/usr/bin/env python
 
-from main import *
+
 import urllib
 import math
 import rospy
 import os
-
+import utm
+import osmnx as ox
 
 class subgraph:
 	def __init__(self, start_x, start_y): 
