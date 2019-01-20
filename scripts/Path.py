@@ -11,6 +11,7 @@ import networkx as nx
 from collections import OrderedDict	
 import utm
 import time
+import matplotlib.pyplot as plt
 from shapely.geometry import Point
 
 
@@ -41,15 +42,17 @@ class path_generator:
 		self._endx= self.goal_points.pose.position.x
 		self._endy= self.goal_points.pose.position.y
 
+
 		rospy.loginfo("waiting for start point")
 		gps = rospy.wait_for_message('ada/fix', NavSatFix, timeout=None)
 		self._start_lon, self._start_lat = gps.longitude, gps.latitude
 		self.latlon_start = (self._start_lat, self._start_lon)
 		self._start_UTMx, self._start_UTMy, _, _ = utm.from_latlon(self._start_lat, self._start_lon )
 
-		return self._start_UTMx, self._start_UTMy
+
 
 	def plan_path(self):
+		rospy.loginfo("**")
 		self._startx = self._start_UTMx
 		self._starty = self._start_UTMy
 
@@ -81,6 +84,9 @@ class path_generator:
 				(self._edges.v[j] == self._route[len(self._route)-1])):
 				
 				self._last_edge_geom = self._edges.geometry[j]
+
+		# self.first_edge_geometry, self.first_u, self.first_v = ox.get_nearest_edge(self._graph_proj, self._start_point)
+		# self.last_edge_geometry, self.end_v , self.end_u = ox.get_nearest_edge(self._graph_proj, self._end_point)
 
 	def generate_path_points(self):
 		for r in range(0, len(self._route)-1):
@@ -117,7 +123,7 @@ class path_generator:
 				pose_st.header.stamp=rospy.Time.now()
 			 	pose_st.pose.position.x = self._projected_start_point.x
 			 	pose_st.pose.position.y = self._projected_start_point.y
-			elif i == len(self._route_pointx):
+			elif i == (len(self._route_pointx)-1):
 				pose_st.header.stamp=rospy.Time.now()
 				pose_st.pose.position.x = self._projected_end_point.x
 				pose_st.pose.position.y = self._projected_end_point.y
@@ -133,3 +139,24 @@ class path_generator:
 
 	def publish_path(self):
 		self.route_pub.publish(self._path)
+
+	def plot_route_points(self):
+		fig, ax = plt.subplots()
+		self._edges.plot(ax=ax)
+		# self._nodes.plot(ax=ax)
+		
+		ax.plot(self._startx,self._starty, 'r+')
+		ax.plot(self._endx,self._endy, 'r+')
+
+
+		for m in range(0,len(self._path.poses)):
+			plt.plot(self._path.poses[m].pose.position.x,self._path.poses[m].pose.position.y)
+			
+			ax.plot(self._path.poses[m].pose.position.x,self._path.poses[m].pose.position.y ,'ro')
+
+
+		ax.plot(self._path.poses[0].pose.position.x,self._path.poses[0].pose.position.y,'b+')
+		ax.plot(self._path.poses[len(self._path.poses)-1].pose.position.x,
+			self._path.poses[len(self._path.poses)-1].pose.position.y,'b+')
+
+		plt.show()
