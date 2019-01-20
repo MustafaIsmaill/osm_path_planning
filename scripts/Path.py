@@ -26,6 +26,7 @@ class path_generator:
 		self._route_pointy = []
 		self._graph_proj= current_map
 		self._edges= edges
+		
 
 		self._NavSatFix= NavSatFix()
 
@@ -41,18 +42,20 @@ class path_generator:
 		self.goal_points= rospy.wait_for_message('/move_base_simple/goal', PoseStamped, timeout=None)
 		self._endx= self.goal_points.pose.position.x
 		self._endy= self.goal_points.pose.position.y
+		self._end_point=(self._endy,self._endx)
+
 
 
 		rospy.loginfo("waiting for start point")
 		gps = rospy.wait_for_message('ada/fix', NavSatFix, timeout=None)
+
 		self._start_lon, self._start_lat = gps.longitude, gps.latitude
-		self.latlon_start = (self._start_lat, self._start_lon)
+		# self.start_lat_lon = (self._start_lat, self._start_lon)
 		self._start_UTMx, self._start_UTMy, _, _ = utm.from_latlon(self._start_lat, self._start_lon )
-
-
+		self._start_point=(self._start_UTMy, self._start_UTMx)
+		return self._start_UTMx, self._start_UTMy
 
 	def plan_path(self):
-		rospy.loginfo("**")
 		self._startx = self._start_UTMx
 		self._starty = self._start_UTMy
 
@@ -104,11 +107,15 @@ class path_generator:
 
 		self._projected_start_point= self._first_edge_geom.interpolate(
 			self._first_edge_geom.project(Point(self._startx, self._starty)))
+
+
 		rospy.loginfo("GPS start point projected to road:")
 		rospy.loginfo(self._projected_start_point)
 
 		self._projected_end_point=self._last_edge_geom.interpolate(
 			self._last_edge_geom.project(Point(self._endx, self._endy)))
+		print(self._projected_end_point.x)
+		print(self._projected_end_point.y)
 
 		rospy.loginfo("GPS goal point projected to road:")
 		rospy.loginfo(self._projected_end_point)
