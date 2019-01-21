@@ -35,10 +35,6 @@ class subgraph:
 			
 			self._curr_UTMx, self._curr_UTMy, _, _ = utm.from_latlon(self._curr_lat, self._curr_lon)
 
-	
-
-			# xdiff =self._curr_UTMx - self._old_UTMx
-			# ydiff=self._curr_UTMy - self._old_UTMy
 
 			dist = self.calc_distance((self._curr_UTMx, self._curr_UTMy), (self._old_UTMx, self._old_UTMy))
 		
@@ -47,7 +43,6 @@ class subgraph:
 			if self.first_time_flag == 1:
 				rospy.loginfo("Generating subgraph")
 				self._curr_point=(self._curr_UTMy, self._curr_UTMx)
-				# self._curr_node = ox.get_nearest_node(self._graph_proj, self._curr_point, method='euclidean')
 				self._old_UTMx=self._curr_UTMx
 				self._old_UTMy=self._curr_UTMy
 				self.curr_gps_point=(self._curr_lat,self._curr_lon)

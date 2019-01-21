@@ -2,15 +2,18 @@
 
 
 import rospy
+
 from nav_msgs.msg import Path
-import osmnx as ox 
 from geometry_msgs.msg import PoseStamped
 from sensor_msgs.msg import NavSatFix
 from shapely.geometry import Point
+
+import osmnx as ox
 import networkx as nx
-from collections import OrderedDict	
 import utm
 import time
+
+from collections import OrderedDict	
 import matplotlib.pyplot as plt
 from shapely.geometry import Point
 
@@ -50,7 +53,6 @@ class path_generator:
 		gps = rospy.wait_for_message('ada/fix', NavSatFix, timeout=None)
 
 		self._start_lon, self._start_lat = gps.longitude, gps.latitude
-		# self.start_lat_lon = (self._start_lat, self._start_lon)
 		self._start_UTMx, self._start_UTMy, _, _ = utm.from_latlon(self._start_lat, self._start_lon )
 		self._start_point=(self._start_UTMy, self._start_UTMx)
 		return self._start_UTMx, self._start_UTMy
@@ -88,8 +90,8 @@ class path_generator:
 				
 				self._last_edge_geom = self._edges.geometry[j]
 
-		# self.first_edge_geometry, self.first_u, self.first_v = ox.get_nearest_edge(self._graph_proj, self._start_point)
-		# self.last_edge_geometry, self.end_v , self.end_u = ox.get_nearest_edge(self._graph_proj, self._end_point)
+		self.first_edge_geometry, self.first_u, self.first_v = self.get_nearest_edge(self._graph_proj, self._start_point)
+		self.last_edge_geometry, self.end_v , self.end_u = self.get_nearest_edge(self._graph_proj, self._end_point)
 
 	def generate_path_points(self):
 		for r in range(0, len(self._route)-1):
@@ -105,15 +107,15 @@ class path_generator:
 		self._route_pointx = list(OrderedDict.fromkeys(self._route_pointx))
 		self._route_pointy = list(OrderedDict.fromkeys(self._route_pointy))
 
-		self._projected_start_point= self._first_edge_geom.interpolate(
-			self._first_edge_geom.project(Point(self._startx, self._starty)))
+		self._projected_start_point= self.first_edge_geometry.interpolate(
+			self.first_edge_geometry.project(Point(self._startx, self._starty)))
 
 
 		rospy.loginfo("GPS start point projected to road:")
 		rospy.loginfo(self._projected_start_point)
 
-		self._projected_end_point=self._last_edge_geom.interpolate(
-			self._last_edge_geom.project(Point(self._endx, self._endy)))
+		self._projected_end_point=self.last_edge_geometry.interpolate(
+			self.last_edge_geometry.project(Point(self._endx, self._endy)))
 		print(self._projected_end_point.x)
 		print(self._projected_end_point.y)
 
@@ -167,3 +169,48 @@ class path_generator:
 			self._path.poses[len(self._path.poses)-1].pose.position.y,'b+')
 
 		plt.show()
+
+	def get_nearest_edge(self,G, point):
+	    """
+	    Return the nearest edge to a pair of coordinates. Pass in a graph and a tuple
+	    with the coordinates. We first get all the edges in the graph. Secondly we compute
+	    the euclidean distance from the coordinates to the segments determined by each edge.
+	    The last step is to sort the edge segments in ascending order based on the distance
+	    from the coordinates to the edge. In the end, the first element in the list of edges
+	    will be the closest edge that we will return as a tuple containing the shapely
+	    geometry and the u, v nodes.
+
+	    Parameters
+	    ----------
+	    G : networkx multidigraph
+	    point : tuple
+	        The (lat, lng) or (y, x) point for which we will find the nearest edge
+	        in the graph
+
+	    Returns
+	    -------
+	    closest_edge_to_point : tuple (shapely.geometry, u, v)
+	        A geometry object representing the segment and the coordinates of the two
+	        nodes that determine the edge section, u and v, the OSM ids of the nodes.
+	    """
+	    start_time = time.time()
+
+	    gdf = ox.graph_to_gdfs(G, nodes=False, fill_edge_geometry=True)
+	    graph_edges = gdf[["geometry", "u", "v"]].values.tolist()
+
+	    edges_with_distances = [
+	        (
+	            graph_edge,
+	            Point(tuple(reversed(point))).distance(graph_edge[0])
+	        )
+	        for graph_edge in graph_edges
+	    ]
+
+	    edges_with_distances = sorted(edges_with_distances, key=lambda x: x[1])
+	    closest_edge_to_point = edges_with_distances[0][0]
+
+	    geometry, u, v = closest_edge_to_point
+
+	    print('Found nearest edge ({}) to point {} in {:,.2f} seconds'.format((u, v), point, time.time() - start_time))
+
+	    return geometry, u, v
