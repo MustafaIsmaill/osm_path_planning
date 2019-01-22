@@ -19,7 +19,7 @@ if __name__ == '__main__':
 		edges = osm_map.get_edges()
 		
 		osm_path = path_generator(current_map, edges)
-		start_x, start_y = osm_path.get_start_and_end()
+		start_x, start_y = osm_path.get_start_and_goal()
 		osm_path.plan_path()
 		osm_path.generate_path_points()
 		osm_path.plot_route_points()
