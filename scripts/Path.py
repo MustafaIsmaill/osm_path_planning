@@ -11,6 +11,7 @@ from shapely.geometry import Point
 import osmnx as ox
 import networkx as nx
 import utm
+import math
 import time
 
 from collections import OrderedDict	
@@ -73,11 +74,29 @@ class path_generator:
 		rospy.loginfo("Goal Point Entered: (UTMx,UTMy)")
 		rospy.loginfo(destination_display) # (434764 4464870)
 		
-		self._origin_node = ox.get_nearest_node(self._graph_proj, self._origin, method='euclidean')
+		self.first_edge_geometry, self.first_u, self.first_v = self.get_nearest_edge(self._graph_proj, self._start_point)
+		self.last_edge_geometry, self.end_v , self.end_u = self.get_nearest_edge(self._graph_proj, self._end_point)
+		
+		for j in range(0, len(self._edges)):
+			if ((self._edges.v[j] == self.first_v) and 
+				(self._edges.u[j] == self.first_u)):
+
+
+				self.oneway_edge= self._edges.oneway[j]
+				self.start_node=self._edges.v[j]
+
+		if (self.oneway_edge == True):
+
+			self._origin_node=	self.start_node
+
+			print("oneway")
+		else:
+			self._origin_node = ox.get_nearest_node(self._graph_proj, self._origin, method='euclidean')
+		
+		
 		self._destination_node = ox.get_nearest_node(self._graph_proj, self._destination, method= 'euclidean')
 		self._route = nx.dijkstra_path(G= self._graph_proj, source= self._origin_node,
 		 target=self._destination_node , weight='length')
-		#ox.plot_graph_route(self._graph_proj, self._route,route_linewidth=6)
 
 		for j in range(0, len(self._edges)):
 			if ((self._edges.u[j] == self._route[0]) and 
@@ -90,8 +109,6 @@ class path_generator:
 				
 				self._last_edge_geom = self._edges.geometry[j]
 
-		self.first_edge_geometry, self.first_u, self.first_v = self.get_nearest_edge(self._graph_proj, self._start_point)
-		self.last_edge_geometry, self.end_v , self.end_u = self.get_nearest_edge(self._graph_proj, self._end_point)
 
 	def generate_path_points(self):
 		for r in range(0, len(self._route)-1):
@@ -116,32 +133,72 @@ class path_generator:
 
 		self._projected_end_point=self.last_edge_geometry.interpolate(
 			self.last_edge_geometry.project(Point(self._endx, self._endy)))
-		print(self._projected_end_point.x)
-		print(self._projected_end_point.y)
+
 
 		rospy.loginfo("GPS goal point projected to road:")
 		rospy.loginfo(self._projected_end_point)
 
-		for i in range (0, len(self._route_pointx)):
+		if ( self.projected_point_before_start_node()):
+
+			pose_st = PoseStamped()
+			
+			pose_st.header.stamp=rospy.Time.now()
+			pose_st.header.seq=0
+			pose_st.pose.position.x = self._projected_start_point.x
+			pose_st.pose.position.y = self._projected_start_point.y
+			self._path.poses.append(pose_st)
+
+			pose_st = PoseStamped()
+
+			pose_st.header.stamp=rospy.Time.now()
+			pose_st.header.seq=1
+			pose_st.pose.position.x=self._route_pointx[0]
+			pose_st.pose.position.y=self._route_pointy[0]
+			self._path.poses.append(pose_st)
+			s=1
+		
+		else:
+
+			self._route_pointx[0]=self._projected_start_point.x
+			self._route_pointy[0]=self._projected_start_point.y
+			s=0
+
+		for i in range (s, len(self._route_pointx)-1):
 
 			pose_st = PoseStamped()
 			pose_st.header.stamp=rospy.Time.now()
-			pose_st.header.seq=i
-
-			if i == 0:
-				pose_st.header.stamp=rospy.Time.now()
-			 	pose_st.pose.position.x = self._projected_start_point.x
-			 	pose_st.pose.position.y = self._projected_start_point.y
-			elif i == (len(self._route_pointx)-1):
-				pose_st.header.stamp=rospy.Time.now()
-				pose_st.pose.position.x = self._projected_end_point.x
-				pose_st.pose.position.y = self._projected_end_point.y
-			else:
-				pose_st.header.stamp=rospy.Time.now()
-				pose_st.pose.position.x = self._route_pointx[i]
-				pose_st.pose.position.y = self._route_pointy[i]
+			pose_st.header.seq=i+2
+			rospy.loginfo(i)
+			pose_st.pose.position.x = self._route_pointx[i]
+			pose_st.pose.position.y = self._route_pointy[i]
 
 		 	self._path.poses.append(pose_st)
+
+
+		if (self.projected_point_before_goal_node()):
+
+			pose_st = PoseStamped()
+			pose_st.header.stamp=rospy.Time.now()
+			pose_st.header.seq=(len(self._route_pointx)+1)
+			pose_st.pose.position.x=self._projected_end_point.x
+			pose_st.pose.position.y=self._projected_end_point.y
+			self._path.poses.append(pose_st)
+		else:
+			pose_st = PoseStamped()
+			pose_st.header.stamp=rospy.Time.now()
+			pose_st.header.seq=i+3
+
+			pose_st.pose.position.x=self._route_pointx[(len(self._route_pointx)-1)]
+			pose_st.pose.position.y=self._route_pointy[(len(self._route_pointy)-1)]
+			self._path.poses.append(pose_st)
+			
+			pose_st = PoseStamped()
+			pose_st.header.stamp=rospy.Time.now()
+			pose_st.header.seq=i+4
+			pose_st.pose.position.x=self._projected_end_point.x
+			pose_st.pose.position.y=self._projected_end_point.y
+			self._path.poses.append(pose_st)
+	
 
 		self.old_UTMx=self._start_UTMx
 		self.old_UTMy=self._start_UTMy
@@ -152,8 +209,7 @@ class path_generator:
 	def plot_route_points(self):
 		fig, ax = plt.subplots()
 		self._edges.plot(ax=ax)
-		# self._nodes.plot(ax=ax)
-		
+
 		ax.plot(self._startx,self._starty, 'r+')
 		ax.plot(self._endx,self._endy, 'r+')
 
@@ -211,6 +267,33 @@ class path_generator:
 
 	    geometry, u, v = closest_edge_to_point
 
-	    print('Found nearest edge ({}) to point {} in {:,.2f} seconds'.format((u, v), point, time.time() - start_time))
+	    # print('Found nearest edge ({}) to point {} in {:,.2f} seconds'.format((u, v), point, time.time() - start_time))
 
 	    return geometry, u, v
+	def calc_distance(self, point1, point2):
+		x1, y1 = point1[0], point1[1]
+		x2, y2 = point2[0], point2[1]
+
+		return math.sqrt((x1-x2)**2 + (y1-y2)**2)
+	def projected_point_before_start_node(self):
+
+		route_point1=(self._route_pointx[0],self._route_pointy[0])
+		route_point2=(self._route_pointx[1],self._route_pointy[1])
+		candidate_point=(self._projected_start_point.x,self._projected_start_point.y)
+		# print(route_point1)
+		# print(route_point2)
+		# print(candidate_point)
+		
+		if (self.calc_distance(route_point2,candidate_point) > self.calc_distance(route_point2,route_point1)):
+			print ("GPS abl awel Node")
+			return True
+	
+	def projected_point_before_goal_node(self):
+
+		route_point1=(self._route_pointx[len(self._route_pointx)-2],self._route_pointy[len(self._route_pointx)-2])
+		route_point2=(self._route_pointx[len(self._route_pointx)-1],self._route_pointy[len(self._route_pointx)-1])
+		candidate_point=(self._projected_end_point.x,self._projected_end_point.y)	
+
+		if (self.calc_distance(route_point1,route_point2) > self.calc_distance(route_point1,candidate_point)):
+			print ("GPS abl akher Node")
+			return True
