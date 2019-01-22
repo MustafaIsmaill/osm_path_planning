@@ -37,6 +37,7 @@ class path_generator:
 
 	edges: geopandas GeoDataFrame	
 		the edges contain the co-ordinates of roads in map
+		
 	Methods:
 	------
 	get_start_and_goal()
