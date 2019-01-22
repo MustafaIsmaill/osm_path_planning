@@ -38,7 +38,7 @@ rosrun rqt_publisher  rqt_publisher
 rosbag play "bag_name"
 ```
 
-5) To get grid map for subgraphs install the ogm_mapping and mapping_lib package
+5) To get grid map for subgraphs install the ogm_mapping and mapping_lib packages.
 
 
 ## Package Inputs
