@@ -138,7 +138,16 @@ class path_generator:
 		rospy.loginfo("GPS goal point projected to road:")
 		rospy.loginfo(self._projected_end_point)
 
-		if ( self.projected_point_before_start_node()):
+		if (self.oneway_edge == True):
+			pose_st = PoseStamped()
+			pose_st.header.stamp=rospy.Time.now()
+			pose_st.header.seq=0
+			pose_st.pose.position.x = self._projected_start_point.x
+			pose_st.pose.position.y = self._projected_start_point.y
+			self._path.poses.append(pose_st)
+			s=0
+			seq=1
+		elif ( self.projected_point_before_start_node()):
 
 			pose_st = PoseStamped()
 			
@@ -156,37 +165,40 @@ class path_generator:
 			pose_st.pose.position.y=self._route_pointy[0]
 			self._path.poses.append(pose_st)
 			s=1
+			seq=2
 		
 		else:
 
 			self._route_pointx[0]=self._projected_start_point.x
 			self._route_pointy[0]=self._projected_start_point.y
 			s=0
+			seq=1
 
 		for i in range (s, len(self._route_pointx)-1):
 
+
 			pose_st = PoseStamped()
 			pose_st.header.stamp=rospy.Time.now()
-			pose_st.header.seq=i+2
+			pose_st.header.seq=seq
 			rospy.loginfo(i)
 			pose_st.pose.position.x = self._route_pointx[i]
 			pose_st.pose.position.y = self._route_pointy[i]
 
 		 	self._path.poses.append(pose_st)
-
+		 	seq+=1
 
 		if (self.projected_point_before_goal_node()):
 
 			pose_st = PoseStamped()
 			pose_st.header.stamp=rospy.Time.now()
-			pose_st.header.seq=(len(self._route_pointx)+1)
+			pose_st.header.seq=seq
 			pose_st.pose.position.x=self._projected_end_point.x
 			pose_st.pose.position.y=self._projected_end_point.y
 			self._path.poses.append(pose_st)
 		else:
 			pose_st = PoseStamped()
 			pose_st.header.stamp=rospy.Time.now()
-			pose_st.header.seq=i+3
+			pose_st.header.seq=seq
 
 			pose_st.pose.position.x=self._route_pointx[(len(self._route_pointx)-1)]
 			pose_st.pose.position.y=self._route_pointy[(len(self._route_pointy)-1)]
@@ -194,7 +206,7 @@ class path_generator:
 			
 			pose_st = PoseStamped()
 			pose_st.header.stamp=rospy.Time.now()
-			pose_st.header.seq=i+4
+			pose_st.header.seq=seq+1
 			pose_st.pose.position.x=self._projected_end_point.x
 			pose_st.pose.position.y=self._projected_end_point.y
 			self._path.poses.append(pose_st)
