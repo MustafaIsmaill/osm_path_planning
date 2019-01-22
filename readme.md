@@ -11,7 +11,7 @@ as well as producing successive subgraphs of vehicle's location for further proc
 pip install osmnx
 ```
 
-2) clone the package 
+2) Clone the package. 
 
 ```bash
 git clone https://AhmedTarek96@bitbucket.org/lsi/osm_path_planning.git
@@ -19,7 +19,7 @@ git clone https://AhmedTarek96@bitbucket.org/lsi/osm_path_planning.git
 
 ## Running The Packagge
 
-1) open configuration file road_processing_planning/config/params.yaml  to set the map and the grid size wanted.
+1) Open configuration file road_processing_planning/config/params.yaml  to set the map and the grid size wanted.
 
 2) Launch the package.
  ```bash
@@ -29,7 +29,7 @@ git clone https://AhmedTarek96@bitbucket.org/lsi/osm_path_planning.git
 ```bash 
 rosrun rqt_publisher  rqt_publisher
 ```
-4) Run rosbag to find starting point in UTM. (without the "")
+4) Run rosbag to find starting point in UTM. (without the "").
 ```bash
 rosbag play "bag_name"
 ```
