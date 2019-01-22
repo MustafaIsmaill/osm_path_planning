@@ -10,7 +10,9 @@ as well as producing successive subgraphs of vehicle's location for further proc
 ```bash
 pip install osmnx
 ```
-clone the package 
+
+2) clone the package 
+
 ```bash
 git clone https://AhmedTarek96@bitbucket.org/lsi/osm_path_planning.git
 ```
