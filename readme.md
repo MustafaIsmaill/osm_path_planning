@@ -17,19 +17,23 @@ pip install osmnx
 git clone https://AhmedTarek96@bitbucket.org/lsi/osm_path_planning.git
 ```
 
-## Running The Packagge
+## Running The Package
 
 1) Open configuration file road_processing_planning/config/params.yaml  to set the map and the grid size wanted.
 
 2) Launch the package.
- ```bash
+
+```bash
  roslaunch road_processing_planning route_points.launch 
 ```
 3) Run rqt to specify goal point in UTM.
+
 ```bash 
 rosrun rqt_publisher  rqt_publisher
 ```
-4) Run rosbag to find starting point in UTM. (without the "").
+
+4) Run rosbag to find starting point in UTM. (without the "")
+
 ```bash
 rosbag play "bag_name"
 ```
