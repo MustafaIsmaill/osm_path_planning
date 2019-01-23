@@ -30,7 +30,7 @@ class path_generator:
 	
 	...
 
-	Attributes:
+	Parameters:
 	---------
 	current_map : networkx MultiDiGraph
 		the downloaded networkx graph containing the road network

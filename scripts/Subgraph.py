@@ -9,7 +9,50 @@ import utm
 import osmnx as ox
 
 class subgraph:
+
+	"""
+	This class generates subgraph every time the vehicle moves a certain distance
+	set by the user in the configuration file. The length and width of the generated
+	subgraph are twice the the distance moved. 
+
+	Parameters:
+	-------------
+	start_x : sensor_msgs.msg._NavSatFix.NavSatFix
+		
+		This is start GPS Latitude converted to UTM easting
+
+	start_y : sensor_msgs.msg._NavSatFix.NavSatFix
+		This is start GPS Longitude converted to UTM northing
+
+	Methods:
+	-----------
+	draw_subgraph()
+
+		Recieves the current GPS co-ordinates of the vehicle and 
+		converts them to UTM, then checks if the car moved a certain
+		distance pre set by the user in configuration file and generates
+		local map of the vehcile if this distance is exceeded.
+		
+	Functions:
+	-----------
+	calc_distance()
+
+		returns euclidean distance between to points
+	"""
+	
 	def __init__(self, start_x, start_y): 
+		"""
+		
+	Parameters:
+	-------------
+	start_x : sensor_msgs.msg._NavSatFix.NavSatFix
+		
+		This is start GPS Latitude converted to UTM easting
+
+	start_y : sensor_msgs.msg._NavSatFix.NavSatFix
+		This is start GPS Longitude converted to UTM northing
+		
+		"""
 		self._old_UTMx = start_x
 		self._old_UTMy = start_y
 
@@ -24,6 +67,32 @@ class subgraph:
 		self.first_time_flag = 1
 
 	def draw_subgraph(self,curr_gps):
+
+		"""
+			generates subgrah by recieving vehicle GPS points. First the
+			Nan GPS points are excluded. Then these GPS points are converted
+			to UTM co-ordinates and the distance between Current point and 
+			starting point is calculated and the flag=1 at beginning so
+		 	the current GPS point is considered as old point and the bounding
+		 	box is generated from this point to be passed as arguement for
+ 			downloading the subgraph.The subgraph is then downloaded from OSM API, 
+ 			and the flag is set to 0. This to generate a subgraph as soon as the first
+ 			gps Reading is recieved.
+			
+			The next subgraphs are generated every time the vehicle moves a certain
+			distance by measuring distance between the old GPS and current GPS
+			points.  If this distance is exceed, the current GPS is set to be old
+			Point, and the a subgraph is downloaded and stored as .xml file 
+			in the same way.
+
+			Parameters:
+			
+			curr_gps : sensor_msgs.msg._NavSatFix.NavSatFix
+				The gps point recieved from ROS Topic
+
+
+		"""
+		
 
 		self.curr=curr_gps
 
@@ -73,6 +142,9 @@ class subgraph:
 			rospy.loginfo("gps value is not a number ...")
 
 	def calc_distance(self, point1, point2):
+		"""
+		"""
+
 		x1, y1 = point1[0], point1[1]
 		x2, y2 = point2[0], point2[1]
 

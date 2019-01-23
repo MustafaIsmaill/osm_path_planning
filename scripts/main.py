@@ -6,12 +6,36 @@ from Path import *
 from Subgraph import *
 
 def gps_callback(gps_msg):
+	"""
+		This is subscriber's callback that publishes the path points in ROS
+		and generates the subgraph.
+
+		parameters:
+		------
+		gps_msg : sensor_msgs.msg._NavSatFix.NavSatFix
+			this contains the lon and lat positions for the car from GPS
+
+
+	"""
+
 	sub_graph.draw_subgraph(gps_msg)
 	osm_path.publish_path()
 
 if __name__ == '__main__':
 	try:
 
+		"""
+			initializes ROS node 'road_processor_planner', then processes the OSM
+			map, generates the path and then enters the subscriber's callback to
+			get the vehicle's position and generate subgraphs accordingly.
+
+			Raises:
+			--------- 
+			Exception
+
+				Depending on where the error occured.			
+
+		"""
 		rospy.init_node('road_processor_planner', anonymous=True)
 
 		osm_map = map_processing()		
