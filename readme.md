@@ -43,11 +43,14 @@ rosbag play "bag_name"
 
 ## Package Inputs
 1) Map.
+
 2) Start and Goal points (UTM).
+
 3) Grid cell size.
 
 ## Package Outputs.
 
 1) Publishes waypoints.
+
 2) Generates subgraphs.
 

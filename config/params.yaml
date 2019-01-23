@@ -1,5 +1,7 @@
 
 place_name: 'leganes,Spain'
 
-grid_map_size: 300
+grid_map_size: 500
+
+map_frame: path_frame
 

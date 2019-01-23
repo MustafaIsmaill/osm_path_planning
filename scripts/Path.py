@@ -90,6 +90,7 @@ class path_generator:
 		self._graph_proj= current_map
 		self._edges= edges
 
+		self.map_frame=rospy.get_param("map_frame")
 
 		self._NavSatFix= NavSatFix()
 
@@ -216,6 +217,7 @@ class path_generator:
 			pose_st = PoseStamped()
 			pose_st.header.stamp=rospy.Time.now()
 			pose_st.header.seq=0
+			pose_st.header.frame_id=self.map_frame
 			pose_st.pose.position.x = self._projected_start_point.x
 			pose_st.pose.position.y = self._projected_start_point.y
 			self._path.poses.append(pose_st)
@@ -228,6 +230,7 @@ class path_generator:
 			
 			pose_st.header.stamp=rospy.Time.now()
 			pose_st.header.seq=0
+			pose_st.header.frame_id=self.map_frame
 			pose_st.pose.position.x = self._projected_start_point.x
 			pose_st.pose.position.y = self._projected_start_point.y
 			self._path.poses.append(pose_st)
@@ -236,6 +239,7 @@ class path_generator:
 
 			pose_st.header.stamp=rospy.Time.now()
 			pose_st.header.seq=1
+			pose_st.header.frame_id=self.map_frame
 			pose_st.pose.position.x=self._route_pointx[0]
 			pose_st.pose.position.y=self._route_pointy[0]
 			self._path.poses.append(pose_st)
@@ -255,6 +259,7 @@ class path_generator:
 			pose_st = PoseStamped()
 			pose_st.header.stamp=rospy.Time.now()
 			pose_st.header.seq=seq
+			pose_st.header.frame_id=self.map_frame
 			pose_st.pose.position.x = self._route_pointx[i]
 			pose_st.pose.position.y = self._route_pointy[i]
 			self._path.poses.append(pose_st)
@@ -265,6 +270,7 @@ class path_generator:
 			pose_st = PoseStamped()
 			pose_st.header.stamp=rospy.Time.now()
 			pose_st.header.seq=seq
+			pose_st.header.frame_id=self.map_frame
 			pose_st.pose.position.x=self._projected_goal_point.x
 			pose_st.pose.position.y=self._projected_goal_point.y
 			self._path.poses.append(pose_st)
@@ -273,6 +279,7 @@ class path_generator:
 			pose_st = PoseStamped()
 			pose_st.header.stamp=rospy.Time.now()
 			pose_st.header.seq=seq
+			pose_st.header.frame_id=self.map_frame
 			pose_st.pose.position.x=self._route_pointx[(len(self._route_pointx)-1)]
 			pose_st.pose.position.y=self._route_pointy[(len(self._route_pointy)-1)]
 			self._path.poses.append(pose_st)
@@ -280,6 +287,7 @@ class path_generator:
 			pose_st = PoseStamped()
 			pose_st.header.stamp=rospy.Time.now()
 			pose_st.header.seq=seq+1
+			pose_st.header.frame_id=self.map_frame
 			pose_st.pose.position.x=self._projected_goal_point.x
 			pose_st.pose.position.y=self._projected_goal_point.y
 			self._path.poses.append(pose_st)
