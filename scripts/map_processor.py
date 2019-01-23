@@ -103,3 +103,5 @@ class map_processing:
 		self._edges = ox.graph_to_gdfs(self._graph_proj, nodes=False, edges=True)
 
 		return self._edges
+
+	

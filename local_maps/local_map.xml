@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<osm version="0.6" generator="CGImap 0.6.1 (1985 thorn-02.openstreetmap.org)" copyright="OpenStreetMap and contributors" attribution="http://www.openstreetmap.org/copyright" license="http://opendatacommons.org/licenses/odbl/1-0/">
+ <bounds minlat="40.3088973" minlon="-3.7768463" maxlat="40.3115999" maxlon="-3.7733161"/>
+ <node id="338641195" visible="true" version="10" changeset="28801440" timestamp="2015-02-12T18:07:36Z" user="CarlosMG" uid="2163609" lat="40.3088447" lon="-3.7746824"/>
+ <node id="338641196" visible="true" version="9" changeset="8712309" timestamp="2011-07-13T12:44:47Z" user="mor" uid="220932" lat="40.3088075" lon="-3.7737377"/>
+ <node id="338641198" visible="true" version="9" changeset="8712309" timestamp="2011-07-13T12:45:47Z" user="mor" uid="220932" lat="40.3089322" lon="-3.7729982"/>
+ <node id="364070575" visible="true" version="6" changeset="28801440" timestamp="2015-02-12T18:07:36Z" user="CarlosMG" uid="2163609" lat="40.3093882" lon="-3.7777893"/>
+ <node id="364070578" visible="true" version="3" changeset="39322916" timestamp="2016-05-15T01:09:47Z" user="Cuenqui" uid="3649461" lat="40.3119538" lon="-3.7700299"/>
+ <node id="1243412946" visible="true" version="3" changeset="22134965" timestamp="2014-05-04T21:31:54Z" user="x0c0" uid="1068293" lat="40.3092656" lon="-3.7760918">
+  <tag k="addr:state" v="ES"/>
+  <tag k="is_in" v="Madrid;Spain;Europe"/>
+  <tag k="is_in:state" v="Madrid"/>
+  <tag k="is_in:state_code" v="28"/>
+  <tag k="name" v="Las Dehesillas"/>
+  <tag k="ngbe:codigo" v="80214"/>
+  <tag k="ngbe:grupo" v="Relieve"/>
+  <tag k="ngbe:hojabcn25" v="0582-1"/>
+  <tag k="ngbe:huso" v="30"/>
+  <tag k="ngbe:id" v="575609"/>
+  <tag k="ngbe:lat_ed50" v="-3.7747820603"/>
+  <tag k="ngbe:lon_ed50" v="40.3104506374"/>
+  <tag k="ngbe:subgrupo" v="Parajes"/>
+  <tag k="ngbe:tema" v="Toponimia"/>
+  <tag k="ngbe:tipotexto" v="S"/>
+  <tag k="ngbe:version" v="provisional"/>
+  <tag k="ngbe:xutm_ed50" v="434162"/>
+  <tag k="ngbe:yutm_ed50" v="4462580"/>
+  <tag k="note" v="If you change this node, please, report to nomenclatorign at gmail dot com. Thank you."/>
+  <tag k="note:es" v="Si realizas algún cambio en este nodo, por favor, comunícalo a nomenclatorign at gmail dot com. Gracias."/>
+  <tag k="place" v="locality"/>
+  <tag k="source" v="Instituto Geográfico Nacional"/>
+  <tag k="source:date" v="201011"/>
+  <tag k="source:file" v="http://centrodedescargas.cnig.es/CentroDescargas/equipamiento/NGBE_de_caracter_Provisional.zip"/>
+  <tag k="source:name" v="Nomenclator Geográfico Básico de España"/>
+ </node>
+ <node id="1360319044" visible="true" version="1" changeset="8712309" timestamp="2011-07-13T12:43:35Z" user="mor" uid="220932" lat="40.3102150" lon="-3.7752418"/>
+ <node id="1360319048" visible="true" version="1" changeset="8712309" timestamp="2011-07-13T12:43:35Z" user="mor" uid="220932" lat="40.3115596" lon="-3.7712093"/>
+ <node id="1360319302" visible="true" version="1" changeset="8712309" timestamp="2011-07-13T12:43:40Z" user="mor" uid="220932" lat="40.3104105" lon="-3.7746556"/>
+ <node id="1360319358" visible="true" version="1" changeset="8712309" timestamp="2011-07-13T12:43:42Z" user="mor" uid="220932" lat="40.3117886" lon="-3.7705225"/>
+ <node id="1360319373" visible="true" version="1" changeset="8712309" timestamp="2011-07-13T12:43:42Z" user="mor" uid="220932" lat="40.3138571" lon="-3.7649501"/>
+ <node id="1360319486" visible="true" version="1" changeset="8712309" timestamp="2011-07-13T12:43:47Z" user="mor" uid="220932" lat="40.3108661" lon="-3.7732892"/>
+ <node id="1360319551" visible="true" version="2" changeset="44450579" timestamp="2016-12-16T15:36:46Z" user="Cuenqui" uid="3649461" lat="40.3121993" lon="-3.7756586"/>
+ <node id="1360319617" visible="true" version="2" changeset="42960417" timestamp="2016-10-17T13:55:17Z" user="Cuenqui" uid="3649461" lat="40.3123629" lon="-3.7749389"/>
+ <node id="1360319776" visible="true" version="1" changeset="8712309" timestamp="2011-07-13T12:43:56Z" user="mor" uid="220932" lat="40.3119438" lon="-3.7759331"/>
+ <node id="1360319845" visible="true" version="1" changeset="8712309" timestamp="2011-07-13T12:43:58Z" user="mor" uid="220932" lat="40.3111040" lon="-3.7725756"/>
+ <node id="1360319893" visible="true" version="1" changeset="8712309" timestamp="2011-07-13T12:44:00Z" user="mor" uid="220932" lat="40.3120682" lon="-3.7758950"/>
+ <node id="1360319911" visible="true" version="1" changeset="8712309" timestamp="2011-07-13T12:44:01Z" user="mor" uid="220932" lat="40.3106399" lon="-3.7739674"/>
+ <node id="1360319963" visible="true" version="1" changeset="8712309" timestamp="2011-07-13T12:44:03Z" user="mor" uid="220932" lat="40.3113277" lon="-3.7719047"/>
+ <way id="121534525" visible="true" version="3" changeset="41062128" timestamp="2016-07-27T12:51:13Z" user="avm" uid="99570">
+  <nd ref="1360319551"/>
+  <nd ref="1360319302"/>
+  <nd ref="338641196"/>
+  <tag k="highway" v="living_street"/>
+  <tag k="maxspeed" v="20"/>
+  <tag k="name" v="Calle Ángel Nieto"/>
+ </way>
+ <way id="121534539" visible="true" version="3" changeset="41062128" timestamp="2016-07-27T12:51:13Z" user="avm" uid="99570">
+  <nd ref="338641198"/>
+  <nd ref="1360319911"/>
+  <nd ref="1360319617"/>
+  <tag k="highway" v="living_street"/>
+  <tag k="maxspeed" v="20"/>
+  <tag k="name" v="Calle Pedro Martínez de la Rosa"/>
+ </way>
+ <way id="121534576" visible="true" version="3" changeset="28801440" timestamp="2015-02-12T18:07:57Z" user="CarlosMG" uid="2163609">
+  <nd ref="338641195"/>
+  <nd ref="1360319044"/>
+  <nd ref="1360319776"/>
+  <nd ref="1360319893"/>
+  <tag k="highway" v="residential"/>
+  <tag k="name" v="Calle Marc Gené"/>
+ </way>
+ <way id="254161898" visible="true" version="2" changeset="41062128" timestamp="2016-07-27T12:51:12Z" user="avm" uid="99570">
+  <nd ref="1360319373"/>
+  <nd ref="364070578"/>
+  <nd ref="1360319358"/>
+  <nd ref="1360319048"/>
+  <nd ref="1360319963"/>
+  <nd ref="1360319845"/>
+  <nd ref="1360319486"/>
+  <nd ref="1360319911"/>
+  <nd ref="1360319302"/>
+  <nd ref="1360319044"/>
+  <nd ref="364070575"/>
+  <tag k="highway" v="residential"/>
+  <tag k="name" v="Calle Fernando Alonso"/>
+ </way>
+ <relation id="6217202" visible="true" version="1" changeset="39322916" timestamp="2016-05-15T01:09:47Z" user="Cuenqui" uid="3649461">
+  <member type="way" ref="32340720" role="from"/>
+  <member type="node" ref="364070578" role="via"/>
+  <member type="way" ref="32340720" role="to"/>
+  <tag k="restriction" v="no_u_turn"/>
+  <tag k="type" v="restriction"/>
+ </relation>
+ <relation id="6217203" visible="true" version="1" changeset="39322916" timestamp="2016-05-15T01:09:47Z" user="Cuenqui" uid="3649461">
+  <member type="way" ref="418198634" role="from"/>
+  <member type="node" ref="364070578" role="via"/>
+  <member type="way" ref="418198634" role="to"/>
+  <tag k="restriction" v="no_u_turn"/>
+  <tag k="type" v="restriction"/>
+ </relation>
+</osm>

@@ -3,12 +3,12 @@
 import rospy
 from map_processor import *
 from Path import *
-from Subgraph import *
+from local_map import *
 
 def gps_callback(gps_msg):
 	"""
 		This is subscriber's callback that publishes the path points in ROS
-		and generates the subgraph.
+		and generates the local_map.
 
 		parameters:
 		------
@@ -18,7 +18,7 @@ def gps_callback(gps_msg):
 
 	"""
 
-	sub_graph.draw_subgraph(gps_msg)
+	sub_graph.draw_local_map(gps_msg)
 	osm_path.publish_path()
 
 if __name__ == '__main__':
@@ -27,7 +27,7 @@ if __name__ == '__main__':
 		"""
 			initializes ROS node 'road_processor_planner', then processes the OSM
 			map, generates the path and then enters the subscriber's callback to
-			get the vehicle's position and generate subgraphs accordingly.
+			get the vehicle's position and generate local_maps accordingly.
 
 			Raises:
 			--------- 
@@ -48,7 +48,7 @@ if __name__ == '__main__':
 		osm_path.generate_path_points()
 		osm_path.plot_route_points()
 		
-		sub_graph = subgraph(start_x, start_y)
+		sub_graph = local_map(start_x, start_y)
 
 		sub = rospy.Subscriber('ada/fix', NavSatFix, gps_callback)
 

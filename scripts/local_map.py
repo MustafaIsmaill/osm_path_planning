@@ -8,12 +8,12 @@ import os
 import utm
 import osmnx as ox
 
-class subgraph:
+class local_map:
 
 	"""
-	This class generates subgraph every time the vehicle moves a certain distance
+	This class generates local_map every time the vehicle moves a certain distance
 	set by the user in the configuration file. The length and width of the generated
-	subgraph are twice the the distance moved. 
+	local_map are twice the the distance moved. 
 
 	Parameters:
 	-------------
@@ -26,7 +26,7 @@ class subgraph:
 
 	Methods:
 	-----------
-	draw_subgraph()
+	draw_local_map()
 
 		Recieves the current GPS co-ordinates of the vehicle and 
 		converts them to UTM, then checks if the car moved a certain
@@ -60,13 +60,13 @@ class subgraph:
 
 		self.file_path= os.path.dirname(os.path.abspath(__file__))
 		self.file_path_map = self.file_path[:len (self.file_path) -7] + 'maps/'
-		self.file_path_subgraph = self.file_path[:len (self.file_path) -7] + 'subgraphs/'
+		self.file_path_local_map = self.file_path[:len (self.file_path) -7] + 'local_maps/'
 
 		self.map_load_range = rospy.get_param("grid_map_size")/2
 
 		self.first_time_flag = 1
 
-	def draw_subgraph(self,curr_gps):
+	def draw_local_map(self,curr_gps):
 
 		"""
 			generates subgrah by recieving vehicle GPS points. First the
@@ -75,14 +75,14 @@ class subgraph:
 			starting point is calculated and the flag=1 at beginning so
 		 	the current GPS point is considered as old point and the bounding
 		 	box is generated from this point to be passed as arguement for
- 			downloading the subgraph.The subgraph is then downloaded from OSM API, 
- 			and the flag is set to 0. This to generate a subgraph as soon as the first
+ 			downloading the local_map.The local_map is then downloaded from OSM API, 
+ 			and the flag is set to 0. This to generate a local_map as soon as the first
  			gps Reading is recieved.
 			
-			The next subgraphs are generated every time the vehicle moves a certain
+			The next local_maps are generated every time the vehicle moves a certain
 			distance by measuring distance between the old GPS and current GPS
 			points.  If this distance is exceed, the current GPS is set to be old
-			Point, and the a subgraph is downloaded and stored as .xml file 
+			Point, and the a local_map is downloaded and stored as .xml file 
 			in the same way.
 
 			Parameters:
@@ -110,7 +110,7 @@ class subgraph:
 			rospy.loginfo("Distance travelled: %f" %dist)
 
 			if self.first_time_flag == 1:
-				rospy.loginfo("Generating subgraph")
+				rospy.loginfo("Generating local_map")
 				self._curr_point=(self._curr_UTMy, self._curr_UTMx)
 				self._old_UTMx=self._curr_UTMx
 				self._old_UTMy=self._curr_UTMy
@@ -119,13 +119,13 @@ class subgraph:
 				url_name = self.url_base + str(west) + "," + str (south) + "," + str(east) + "," + str(north)
 				rospy.loginfo("downloading ...")
 
-				urllib.urlretrieve(url_name, self.file_path_subgraph + 'subgraph.xml')
+				urllib.urlretrieve(url_name, self.file_path_local_map + 'local_map.xml')
 
 				self.first_time_flag = 0
 
 			if dist > self.map_load_range:
 				
-				rospy.loginfo("Generating subgraph")
+				rospy.loginfo("Generating local_map")
 				self._curr_point=(self._curr_UTMy, self._curr_UTMx)
 				self._old_UTMx=self._curr_UTMx
 				self._old_UTMy=self._curr_UTMy
@@ -134,7 +134,7 @@ class subgraph:
 				url_name = self.url_base + str(west) + "%2C" + str (south) + "%2C" + str(east) + "%2C" + str(north)
 				rospy.loginfo("downloading ...")
 
-				urllib.urlretrieve(url_name, self.file_path_subgraph + 'subgraph.xml')
+				urllib.urlretrieve(url_name, self.file_path_local_map + 'local_map.xml')
 
 			else:
 				rospy.loginfo("distance is less than %f meters" %self.map_load_range)

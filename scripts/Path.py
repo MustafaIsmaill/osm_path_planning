@@ -18,7 +18,8 @@ from collections import OrderedDict
 import matplotlib.pyplot as plt
 from shapely.geometry import Point
 
-
+import pandas as pd
+import numpy as np
 
 
 
@@ -53,6 +54,8 @@ class path_generator:
 		on a set of cases
 	get_nearest_edge(Graph, edge)
 		projects the GPS point to the nearest road
+	get_nearest_node(Graph, Point)
+		finds the nearest node to the GPS point to start route planning
 	publish_path()
 		publishes PoseStamped ROS msg 
 	plot_route()
@@ -130,7 +133,7 @@ class path_generator:
 	def plan_path(self):
 		
 		"""
-		it generates OSMM nodes for the shortest path using dijsktra's algorithm 
+		it generates OSM nodes for the shortest path using dijsktra's algorithm 
 		between two nodes. This happens by first projecting the start and end points 
 		to their corresponding nearest edges. The start and end node in the first edge 
 		are extracted, and if this edge (road in real life) is has oneway tag from OSM,
@@ -165,10 +168,10 @@ class path_generator:
 			self._origin_node=	self.start_node
 
 		else:
-			self._origin_node = ox.get_nearest_node(self._graph_proj, self._start_point, method='euclidean')
+			
+			self._origin_node = self.get_nearest_node(self._graph_proj, self._start_point)
 		
-		
-		self._goal_node = ox.get_nearest_node(self._graph_proj, self._goal_point, method= 'euclidean')
+		self._goal_node = self.get_nearest_node(self._graph_proj, self._goal_point)
 		self._route = nx.dijkstra_path(G= self._graph_proj, source= self._origin_node,
 		 target=self._goal_node , weight='length')
 
@@ -410,3 +413,29 @@ class path_generator:
 		if (self.calc_distance(route_point1,route_point2) > self.calc_distance(route_point1,candidate_point)):
 
 			return True
+	def get_nearest_node(self,G, point):
+
+		"""
+	    Return the graph node nearest to some specified (lat, lng) or (y, x) point,
+	    and optionally the distance between the node and the point. This function
+		uses euclidean distance calculator.
+
+	    Parameters
+	    ----------
+	    G : networkx multidigraph
+	   
+	    point : tuple
+	        The (lat, lng) or (y, x) point for which we will find the nearest node
+	        in the graph
+		"""
+		coords = np.array([[node, data['x'], data['y']] for node, data in G.nodes(data=True)])
+		df = pd.DataFrame(coords, columns=['node', 'x', 'y']).set_index('node')
+		df['reference_y'] = point[0]
+		df['reference_x'] = point[1]
+		distances = self.euclidean_dist_vec(y1=df['reference_y'],x1=df['reference_x'],y2=df['y'],x2=df['x'])
+		nearest_node = int(distances.idxmin())
+		return nearest_node
+
+	def euclidean_dist_vec(self,y1, x1, y2, x2):
+		distance = ((x1 - x2) ** 2 + (y1 - y2) ** 2) ** 0.5
+		return distance
