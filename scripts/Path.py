@@ -167,19 +167,24 @@ class path_generator:
 				self.oneway_edge= self._edges.oneway[j]
 				self.start_node=self._edges.v[j]
 
-		if (self.oneway_edge == True):
 
+		if (self.oneway_edge == True):
+			rospy.loginfo("one way")
 			self._origin_node=	self.start_node
 
+
 		else:
-			
+
 			self._origin_node = self.get_nearest_node(self._graph_proj, self._start_point)
-		self._DiGraph= nx.Graph()		
+		
+		self._DiGraph= nx.DiGraph()		
 		
 		for j in range(0, len(self._edges)):
 			self._DiGraph.add_edge(self._edges.u[j],self._edges.v[j])
 
 		self._goal_node = self.get_nearest_node(self._graph_proj, self._goal_point)
+		# self._route = nx.dijkstra_path(G= self._graph_proj, source= self._origin_node,
+		 # target=self._goal_node , weight='length')
 		self._route = self.astar_path(G= self._DiGraph, source= self._origin_node,
 		 target=self._goal_node , weight='length', heuristic= None)
 
@@ -356,10 +361,8 @@ class path_generator:
 	        A geometry object representing the segment and the coordinates of the two
 	        nodes that determine the edge section, u and v, the OSM ids of the nodes.
 	    """
-	    start_time = time.time()
-
-	    gdf = ox.graph_to_gdfs(G, nodes=False, fill_edge_geometry=True)
-	    graph_edges = gdf[["geometry", "u", "v"]].values.tolist()
+	   
+	    graph_edges = self._edges[["geometry", "u", "v"]].values.tolist()
 
 	    edges_with_distances = [
 	        (
