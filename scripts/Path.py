@@ -21,6 +21,9 @@ from shapely.geometry import Point
 import pandas as pd
 import numpy as np
 
+from heapq import heappush, heappop
+from itertools import count
+
 
 
 class path_generator:
@@ -171,10 +174,16 @@ class path_generator:
 		else:
 			
 			self._origin_node = self.get_nearest_node(self._graph_proj, self._start_point)
+		self._DiGraph= nx.Graph()		
 		
+		for j in range(0, len(self._edges)):
+			self._DiGraph.add_edge(self._edges.u[j],self._edges.v[j])
+
 		self._goal_node = self.get_nearest_node(self._graph_proj, self._goal_point)
-		self._route = nx.dijkstra_path(G= self._graph_proj, source= self._origin_node,
-		 target=self._goal_node , weight='length')
+		self._route = self.astar_path(G= self._DiGraph, source= self._origin_node,
+		 target=self._goal_node , weight='length', heuristic= None)
+
+
 
 	def generate_path_points(self):
 
@@ -447,3 +456,87 @@ class path_generator:
 	def euclidean_dist_vec(self,y1, x1, y2, x2):
 		distance = ((x1 - x2) ** 2 + (y1 - y2) ** 2) ** 0.5
 		return distance
+	def astar_path(self,G, source, target,  weight, heuristic):
+		"""
+		Return a list of nodes in a shortest path between source and target
+		using the A* ("A-star") algorithm.
+
+		There may be more than one shortest path.  This returns only one.
+
+		Parameters
+		----------
+		G : NetworkX graph
+
+		source : node
+		Starting node for path
+
+		target : node
+		Ending node for path
+
+		heuristic : function, optional
+		A function to evaluate the estimate of the distance
+		from the a node to the target.  The function takes
+		two nodes arguments and must return a number.
+
+		weight: string, optional
+		Edge data key corresponding to the edge weight.
+
+		Raises
+		------
+		Value Error
+		If no path exists between source and target
+		"""
+		if source not in G or target not in G:
+			msg = 'Either start node or target node is not in map'
+			raise ValueError(msg)
+
+		if heuristic is None:
+        
+			def heuristic(u, v):
+				return 0
+
+		push = heappush
+		pop = heappop
+
+		c = count()
+		queue = [(0, next(c), source, 0, None)]
+
+		enqueued = {}
+		explored = {}
+
+		while queue:
+			
+			_, __, curnode, dist, parent = pop(queue)
+			
+			if curnode == target:
+				path = [curnode]
+				node = parent
+				while node is not None:
+					path.append(node)
+					node = explored[node]
+				path.reverse()
+				return path
+
+			if curnode in explored:
+				continue
+
+			explored[curnode] = parent
+
+			for neighbor, w in G[curnode].items():
+				
+				if neighbor in explored:
+					continue
+				fcost = dist + w.get(weight, 1)
+				
+				if neighbor in enqueued:
+					qcost, h = enqueued[neighbor]
+
+					if qcost <= fcost:
+						continue
+				else:
+					h = heuristic(neighbor, target)
+				enqueued[neighbor] = fcost, h
+				push(queue, (fcost + h, next(c), neighbor, fcost, curnode))
+				
+		msg = 'Can not find path from start to end nodes'
+		raise ValueError(msg)
