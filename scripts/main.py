@@ -17,9 +17,8 @@ def gps_callback(gps_msg):
 
 
 	"""
-
-	sub_graph.draw_local_map(gps_msg)
 	osm_path.publish_path()
+	sub_graph.draw_local_map(gps_msg)
 
 if __name__ == '__main__':
 	try:

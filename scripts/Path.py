@@ -572,8 +572,7 @@ class path_generator:
 				new_x.append(xl[idx])
 				new_y.append(yl[idx])
 
-		new_x = list(OrderedDict.fromkeys(new_x))
-		new_y = list(OrderedDict.fromkeys(new_y))
+		new_x, new_y = sp.remove_duplicates(new_x, new_y)
 	
 		for idx in range(len(new_x)):
 			pose_st = PoseStamped()

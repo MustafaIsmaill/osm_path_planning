@@ -6,8 +6,8 @@ from shapely.geometry import LineString
 
 def remove_duplicates(x, y):
     for idx in range(len(x)):
-        x[idx] = round(x[idx], 4)
-        y[idx] = round(y[idx], 4)
+        x[idx] = round(x[idx], 2)
+        y[idx] = round(y[idx], 2)
 
     x = list(OrderedDict.fromkeys(x))
     y = list(OrderedDict.fromkeys(y))
