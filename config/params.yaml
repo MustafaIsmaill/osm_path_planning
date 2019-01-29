@@ -5,4 +5,4 @@ grid_map_size: 500
 
 map_frame: map
 
-lane_shift: 2 # meter
+lane_shift: 1 # meter

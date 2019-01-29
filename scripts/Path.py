@@ -307,11 +307,11 @@ class path_generator:
 			pose_st.pose.position.y=self._projected_goal_point.y
 			self._path.poses.append(pose_st)
 	
-		x = []
-		y = []
-		for p in self._path.poses:
-			x.append(p.pose.position.x)
-			y.append(p.pose.position.y)
+		# x = []
+		# y = []
+		# for p in self._path.poses:
+		# 	x.append(p.pose.position.x)
+		# 	y.append(p.pose.position.y)
 			
 		# rospy.loginfo(x)
 		# rospy.loginfo(y)
@@ -324,7 +324,6 @@ class path_generator:
 		publishes nav_msgs.msg._Path.Path ROS msg 
 
 		"""
-
 		self.route_pub.publish(self._path)
 
 	def plot_route_points(self):
@@ -565,14 +564,24 @@ class path_generator:
 		lines = sp.remove_intersects(lines)
 
 		new_path = Path()
+		new_x = []
+		new_y = []
 		for line in lines:
 			xl, yl = line.xy
 			for idx in range(len(xl)):
-				pose_st = PoseStamped()
-				pose_st.header.stamp = rospy.Time.now()
-				pose_st.header.frame_id = self.map_frame
-				pose_st.pose.position.x = xl[idx]
-				pose_st.pose.position.y = yl[idx]
-				new_path.poses.append(pose_st)
+				new_x.append(xl[idx])
+				new_y.append(yl[idx])
+
+		new_x = list(OrderedDict.fromkeys(new_x))
+		new_y = list(OrderedDict.fromkeys(new_y))
+	
+		for idx in range(len(new_x)):
+			pose_st = PoseStamped()
+			pose_st.header.stamp = rospy.Time.now()
+			pose_st.header.frame_id = self.map_frame
+			pose_st.header.seq = idx
+			pose_st.pose.position.x = new_x[idx]
+			pose_st.pose.position.y = new_y[idx]
+			new_path.poses.append(pose_st)
 
 		self._path = new_path
