@@ -6,3 +6,7 @@ echo "---------------------------------------"
 
 sudo apt-get install libspatialindex-dev
 sudo pip install osmnx
+
+
+
+

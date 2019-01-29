@@ -46,6 +46,7 @@ if __name__ == '__main__':
 		start_x, start_y = osm_path.get_start_and_goal()
 		osm_path.plan_path()
 		osm_path.generate_path_points()
+		osm_path.shift_path_points()
 		osm_path.plot_route_points()
 		
 		sub_graph = local_map(start_x, start_y)

@@ -115,7 +115,7 @@ class local_map:
 				self._old_UTMx=self._curr_UTMx
 				self._old_UTMy=self._curr_UTMy
 				self.curr_gps_point=(self._curr_lat,self._curr_lon)
-				north, south, east, west= ox.bbox_from_point(self.curr_gps_point, distance=self.map_load_range)
+				north, south, east, west= ox.bbox_from_point(self.curr_gps_point, distance=rospy.get_param("grid_map_size"))
 				url_name = self.url_base + str(west) + "," + str (south) + "," + str(east) + "," + str(north)
 				rospy.loginfo("downloading ...")
 

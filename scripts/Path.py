@@ -24,6 +24,7 @@ import numpy as np
 from heapq import heappush, heappop
 from itertools import count
 
+import shift_path as sp
 
 
 class path_generator:
@@ -183,10 +184,10 @@ class path_generator:
 			self._DiGraph.add_edge(self._edges.u[j],self._edges.v[j])
 
 		self._goal_node = self.get_nearest_node(self._graph_proj, self._goal_point)
-		# self._route = nx.dijkstra_path(G= self._graph_proj, source= self._origin_node,
-		 # target=self._goal_node , weight='length')
-		self._route = self.astar_path(G= self._DiGraph, source= self._origin_node,
-		 target=self._goal_node , weight='length', heuristic= None)
+		self._route = nx.dijkstra_path(G= self._graph_proj, source= self._origin_node,
+		 target=self._goal_node , weight='length')
+		# self._route = self.astar_path(G= self._DiGraph, source= self._origin_node,
+		#  target=self._goal_node , weight='length', heuristic= None)
 
 
 
@@ -306,6 +307,14 @@ class path_generator:
 			pose_st.pose.position.y=self._projected_goal_point.y
 			self._path.poses.append(pose_st)
 	
+		x = []
+		y = []
+		for p in self._path.poses:
+			x.append(p.pose.position.x)
+			y.append(p.pose.position.y)
+			
+		# rospy.loginfo(x)
+		# rospy.loginfo(y)
 
 		self.old_UTMx=self._startx
 		self.old_UTMy=self._starty
@@ -336,7 +345,7 @@ class path_generator:
 		ax.plot(self._path.poses[len(self._path.poses)-1].pose.position.x,
 			self._path.poses[len(self._path.poses)-1].pose.position.y,'b+')
 
-		plt.show()
+		# plt.show()
 
 	def get_nearest_edge(self,G, point):
 	    """
@@ -543,3 +552,27 @@ class path_generator:
 				
 		msg = 'Can not find path from start to end nodes'
 		raise ValueError(msg)
+
+	def shift_path_points(self):
+		x = []
+		y = []
+		for p in self._path.poses:
+			x.append(p.pose.position.x)
+			y.append(p.pose.position.y)
+
+		x, y = sp.remove_duplicates(x, y)
+		lines = sp.shift_path(x, y, rospy.get_param("lane_shift"))
+		lines = sp.remove_intersects(lines)
+
+		new_path = Path()
+		for line in lines:
+			xl, yl = line.xy
+			for idx in range(len(xl)):
+				pose_st = PoseStamped()
+				pose_st.header.stamp = rospy.Time.now()
+				pose_st.header.frame_id = self.map_frame
+				pose_st.pose.position.x = xl[idx]
+				pose_st.pose.position.y = yl[idx]
+				new_path.poses.append(pose_st)
+
+		self._path = new_path
