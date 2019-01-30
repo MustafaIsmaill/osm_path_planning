@@ -467,6 +467,7 @@ class path_generator:
 	def euclidean_dist_vec(self,y1, x1, y2, x2):
 		distance = ((x1 - x2) ** 2 + (y1 - y2) ** 2) ** 0.5
 		return distance
+		
 	def astar_path(self,G, source, target,  weight, heuristic):
 		"""
 		Return a list of nodes in a shortest path between source and target
