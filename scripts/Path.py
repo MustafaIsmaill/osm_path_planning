@@ -561,7 +561,7 @@ class path_generator:
 			y.append(p.pose.position.y)
 
 		x, y = sp.rm_duplicates(x, y)
-		lines = sp.shift_path(x, y, rospy.get_param("lane_shift"))
+		lines = sp.shift_path(x, y, float(rospy.get_param("lane_shift")))
 		lines = sp.remove_intersects(lines)
 
 		new_path = Path()
@@ -575,8 +575,6 @@ class path_generator:
 
 		new_x, new_y = sp.rm_duplicates(new_x, new_y)
 	
-		print(len(new_x), len(new_y))
-
 		for idx in range(len(new_x)):
 			pose_st = PoseStamped()
 			pose_st.header.stamp = rospy.Time.now()

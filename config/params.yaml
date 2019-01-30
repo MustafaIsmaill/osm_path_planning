@@ -5,4 +5,5 @@ grid_map_size: 500
 
 map_frame: map
 
-lane_shift: 2 # meter
+# +ve to the right and -ve to the left. value is in meters
+lane_shift: 2
