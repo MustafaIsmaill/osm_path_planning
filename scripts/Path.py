@@ -95,11 +95,11 @@ class path_generator:
 		self._edges= edges
 
 		self.map_frame=rospy.get_param("map_frame")
-
 		self._NavSatFix= NavSatFix()
 
 		self._path = Path()
 		self._path.header.stamp = rospy.Time.now()
+		self._path.header.frame_id = self.map_frame
 
 		self.route_pub = rospy.Publisher("route_points", Path, queue_size=1)
 		rate = rospy.Rate(1)
@@ -232,7 +232,7 @@ class path_generator:
 			pose_st = PoseStamped()
 			pose_st.header.stamp=rospy.Time.now()
 			pose_st.header.seq=0
-			pose_st.header.frame_id=self.map_frame
+			pose_st.header.frame_id = self.map_frame
 			pose_st.pose.position.x = self._projected_start_point.x
 			pose_st.pose.position.y = self._projected_start_point.y
 			self._path.poses.append(pose_st)
@@ -344,7 +344,7 @@ class path_generator:
 		ax.plot(self._path.poses[len(self._path.poses)-1].pose.position.x,
 			self._path.poses[len(self._path.poses)-1].pose.position.y,'b+')
 
-		# plt.show()
+		plt.show()
 
 	def get_nearest_edge(self,G, point):
 	    """
@@ -560,7 +560,7 @@ class path_generator:
 			x.append(p.pose.position.x)
 			y.append(p.pose.position.y)
 
-		x, y = sp.remove_duplicates(x, y)
+		x, y = sp.rm_duplicates(x, y)
 		lines = sp.shift_path(x, y, rospy.get_param("lane_shift"))
 		lines = sp.remove_intersects(lines)
 
@@ -573,8 +573,10 @@ class path_generator:
 				new_x.append(xl[idx])
 				new_y.append(yl[idx])
 
-		new_x, new_y = sp.remove_duplicates(new_x, new_y)
+		new_x, new_y = sp.rm_duplicates(new_x, new_y)
 	
+		print(len(new_x), len(new_y))
+
 		for idx in range(len(new_x)):
 			pose_st = PoseStamped()
 			pose_st.header.stamp = rospy.Time.now()

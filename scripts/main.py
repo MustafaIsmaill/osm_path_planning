@@ -24,15 +24,15 @@ if __name__ == '__main__':
 	try:
 
 		"""
-			initializes ROS node 'road_processor_planner', then processes the OSM
-			map, generates the path and then enters the subscriber's callback to
-			get the vehicle's position and generate local_maps accordingly.
+		initializes ROS node 'road_processor_planner', then processes the OSM
+		map, generates the path and then enters the subscriber's callback to
+		get the vehicle's position and generate local_maps accordingly.
 
-			Raises:
-			--------- 
-			Exception
+		Raises:
+		--------- 
+		Exception
 
-				Depending on where the error occured.			
+			Depending on where the error occured.			
 
 		"""
 		rospy.init_node('road_processor_planner', anonymous=True)
@@ -40,14 +40,14 @@ if __name__ == '__main__':
 		osm_map = map_processing()		
 		current_map = osm_map.get_map(rospy.get_param("place_name"))
 		edges = osm_map.get_edges()
-		
+
 		osm_path = path_generator(current_map, edges)
 		start_x, start_y = osm_path.get_start_and_goal()
 		osm_path.plan_path()
 		osm_path.generate_path_points()
 		osm_path.shift_path_points()
 		osm_path.plot_route_points()
-		
+
 		sub_graph = local_map(start_x, start_y)
 
 		sub = rospy.Subscriber('ada/fix', NavSatFix, gps_callback)

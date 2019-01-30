@@ -4,15 +4,20 @@ import math
 from shapely.geometry import Point
 from shapely.geometry import LineString
 
-def remove_duplicates(x, y):
-    for idx in range(len(x)):
-        x[idx] = round(x[idx], 2)
-        y[idx] = round(y[idx], 2)
+def get_eucl_distance(p1x, p1y, p2x, p2y):
+    return math.sqrt( (p2x-p1x)**2 + (p2y-p1y)**2 )
 
-    x = list(OrderedDict.fromkeys(x))
-    y = list(OrderedDict.fromkeys(y))
-
-    return x, y
+def rm_duplicates(arr_x, arr_y):
+    length = len(arr_x) - 1
+    idx = 0
+    while idx < length:
+        if get_eucl_distance(arr_x[idx], arr_y[idx], arr_x[idx+1], arr_y[idx+1]) < 0.5:
+            arr_x.remove(arr_x[idx])
+            arr_y.remove(arr_y[idx])   
+            length -= 1
+        idx += 1
+    
+    return arr_x, arr_y
 
 def parallel_line_shift(start, end, distance):
     (x1,y1) = start
