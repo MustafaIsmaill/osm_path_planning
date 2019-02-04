@@ -585,3 +585,28 @@ class path_generator:
 			new_path.poses.append(pose_st)
 
 		self._path = new_path
+
+	def make_fake_path(self):
+		with open('gps_path.txt') as f:
+		    lines = f.read().splitlines()
+
+		xarr = []
+		yarr = []
+
+		for line in lines:
+			x, y = line.split(',')
+			xarr.append(float(x))
+			yarr.append(float(y))
+
+		new_path = Path()
+
+		for idx in range(len(xarr)):
+			pose_st = PoseStamped()
+			pose_st.header.stamp = rospy.Time.now()
+			pose_st.header.frame_id = self.map_frame
+			pose_st.header.seq = idx
+			pose_st.pose.position.x = xarr[idx]
+			pose_st.pose.position.y = yarr[idx]
+			new_path.poses.append(pose_st)
+
+		self._path = new_path
