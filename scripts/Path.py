@@ -587,7 +587,8 @@ class path_generator:
 		self._path = new_path
 
 	def make_fake_path(self):
-		with open('gps_path.txt') as f:
+		path_dir = rospy.get_param('fake_path_dir')
+		with open(path_dir) as f:
 		    lines = f.read().splitlines()
 
 		xarr = []

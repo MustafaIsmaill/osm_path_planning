@@ -7,3 +7,5 @@ map_frame: map
 
 # +ve to the right and -ve to the left. value is in meters
 lane_shift: 2
+
+fake_path_dir: 'home/youssef/catkin_ws/src/osm_path_planning/scripts/gps_path.txt'
